@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>めざせ！太陽系ハカセ クイズ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --panel-bg: rgba(13, 20, 40, 0.85);
+            --border-color: #4fc3f7;
+            --text-color: #ffffff;
+            --accent-yellow: #ffd54f;
+            --btn-bg: #1565c0;
+            --btn-hover: #1e88e5;
+            --shadow: 0 0 15px rgba(79, 195, 247, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
+        /* 太陽系・宇宙の背景デザイン */
+        body {
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: var(--text-color);
+            padding: 20px 10px 60px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 背景に星を降らせるアニメーション表現 */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffd54f, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #81d4fa, rgba(0,0,0,0));
+            background-size: 200px 200px;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        header {
+            max-width: 700px;
+            margin: 0 auto 20px;
+            text-align: center;
+            background: var(--panel-bg);
+            padding: 20px 15px;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(5px);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--accent-yellow);
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(255, 213, 79, 0.5);
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            color: #b3e5fc;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            box-shadow: var(--shadow);
+            padding: 25px 20px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 900;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--border-color);
+            color: var(--accent-yellow);
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin: 20px 0;
+            color: #ffffff;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            background-color: var(--btn-bg);
+            color: #ffffff;
+            border: 2px solid var(--border-color);
+            padding: 14px 10px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .option-btn:hover {
+            background-color: var(--btn-hover);
+            transform: translateY(-2px);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+
+        .feedback-box {
+            min-height: 60px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .explanation {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.95rem;
+            color: #e1f5fe;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .control-btn {
+            background: var(--accent-yellow);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 213, 79, 0.6);
+            margin-top: 10px;
+        }
+
+        .control-btn:hover {
+            background: #ffee58;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-yellow);
+            margin-bottom: 15px;
+        }
+
+        .result-score {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #81d4fa;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌌 めざせ！太陽系ハカセ クイズ 🌌</h1>
+        <p>太陽や惑星の順番・特徴を覚えられる4たくクイズ！</p>
+    </header>
+
+    <div class="container">
+        <!-- クイズ画面 -->
+        <div class="card" id="quizScreen">
+            <div class="status-bar">
+                <span id="progressText">第 1 問 / 全 10 問</span>
+                <span id="scoreText">正解数: 0</span>
+            </div>
+
+            <div class="question-text" id="questionText">問題がここに表示されます</div>
+
+            <div class="options-grid" id="optionsGrid">
+                <!-- 4択ボタン -->
+            </div>
+
+            <div class="feedback-box" id="feedbackBox"></div>
+
+            <button class="control-btn" id="nextBtn" style="display: none;" onclick="nextQuestion()">次の問題へ ➔</button>
+        </div>
+
+        <!-- 結果画面 -->
+        <div class="card" id="resultScreen" style="display: none;">
+            <div class="result-title">🚀 クイズしゅうりょう！ 🚀</div>
+            <div class="result-score" id="finalScore">0 / 10 問 正解！</div>
+            <div class="result-msg" id="resultMsg" style="font-size: 1.1rem; margin-bottom: 20px; color: #b3e5fc;"></div>
+            <button class="control-btn" onclick="startNewQuiz()">もう一度挑戦する 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        // 太陽系についての覚えやすいクイズ問題データ（全10問）
+        const quizData = [
+            {
+                question: "太陽に近い順番の覚えかた「すい・きん・ち・か・もく・ど・てん・かい」で、太陽に一番近い惑星はどれ？",
+                options: ["水星（すいせい）", "金星（きんせい）", "地球（ちきゅう）", "火星（かせい）"],
+                answer: "水星（すいせい）",
+                explanation: "太陽に近い順は「水・金・地・火・木・土・天・海」です。一番近いのは『水星』だよ！"
+            },
+            {
+                question: "太陽系で「いちばん大きい」巨大な惑星はどれでしょう？",
+                options: ["木星（もくせい）", "土星（どせい）", "地球（ちきゅう）", "海王星（かいおうせい）"],
+                answer: "木星（もくせい）",
+                explanation: "木星は太陽系の中で最大の惑星！地球が約11個ならぶ大きさがあります。"
+            },
+            {
+                question: "くっきりとした大きな「輪（リング）」がついていることで有名な惑星はどれ？",
+                options: ["土星（どせい）", "火星（かせい）", "水星（すいせい）", "金星（きんせい）"],
+                answer: "土星（どせい）",
+                explanation: "土星には氷や岩のつぶが集まってできた美しく大きな『輪（リング）』があります。"
+            },
+            {
+                question: "表面に酸化鉄（サビ）が多くあり、「赤い惑星」と呼ばれているのはどれ？",
+                options: ["火星（かせい）", "金星（きんせい）", "木星（もくせい）", "天王星（てんのうせい）"],
+                answer: "火星（かせい）",
+                explanation: "火星は大地が赤っぽく見えることから「赤い惑星」と呼ばれ、昔から探査機がたくさん送られています。"
+            },
+            {
+                question: "夜空で太陽と月の次に明るく輝き、「よいのミョウジョウ」「あけのミョウジョウ」と呼ばれる惑星は？",
+                options: ["金星（きんせい）", "水星（すいせい）", "土星（どせい）", "海王星（かいおうせい）"],
+                answer: "金星（きんせい）",
+                explanation: "金星は分厚い雲に包まれていて、太陽の光をよく反射するためとても明るく見えます。"
+            },
+            {
+                question: "太陽系で「海」があり、私たちがくらしている惑星はどれ？",
+                options: ["地球（ちきゅう）", "水星（すいせい）", "火星（かせい）", "木星（もくせい）"],
+                answer: "地球（ちきゅう）",
+                explanation: "地球は豊かな水と空気にめぐまれ、生命が生きられる特別な「青い惑星」です。"
+            },
+            {
+                question: "自転軸（回転する軸）が横倒しになっていて、倒れるようにまわっている惑星は？",
+                options: ["天王星（てんのうせい）", "土星（どせい）", "海王星（かいおうせい）", "水星（すいせい）"],
+                answer: "天王星（てんのうせい）",
+                explanation: "天王星は自転軸が約98度も傾いていて、横だおしになったまま太陽のまわりを回っています。"
+            },
+            {
+                question: "太陽系で一番外側をまわっている、きれいな青色をしたガス惑星はどれ？",
+                options: ["海王星（かいおうせい）", "天王星（てんのうせい）", "木星（もくせい）", "金星（きんせい）"],
+                answer: "海王星（かいおうせい）",
+                explanation: "「すい・きん・ち・か・もく・ど・てん・かい」の一番最後、8番目の惑星が『海王星』です。"
+            },
+            {
+                question: "太陽系を中心でささえ、自分で光と熱を出してかがやいている巨大な星は？",
+                options: ["太陽（たいよう）", "月（つき）", "木星（もくせい）", "彗星（すいせい）"],
+                answer: "太陽（たいよう）",
+                explanation: "太陽は「恒星（こうせい）」と呼ばれ、太陽系の全重力の約99.8%を占める中心的存在です。"
+            },
+            {
+                question: "太陽系にある8つの惑星は、すべて何という星（太陽）のまわりを回っているでしょう？",
+                options: ["公転（こうてん）", "自転（じてん）", "逆転（ぎゃくてん）", "回転（かいてん）"],
+                answer: "公転（こうてん）",
+                explanation: "惑星が太陽の周りをぐるぐる回る動きのことを『公転（こうてん）』と呼びます。"
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function startNewQuiz() {
+            currentQuestions = shuffleArray(quizData);
+            currentIndex = 0;
+            score = 0;
+
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('resultScreen').style.display = 'none';
+
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = currentQuestions[currentIndex];
+
+            document.getElementById('progressText').innerText = `第 ${currentIndex + 1} 問 / 全 10 問`;
+            document.getElementById('scoreText').innerText = `正解数: ${score}`;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('feedbackBox').innerHTML = '';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            const shuffledOptions = shuffleArray(q.options);
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt, q, btn);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected, qData, clickedBtn) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            const feedbackBox = document.getElementById('feedbackBox');
+
+            if (selected === qData.answer) {
+                score++;
+                clickedBtn.style.backgroundColor = '#2e7d32'; // 正解は緑
+                clickedBtn.style.borderColor = '#a5d6a7';
+                feedbackBox.innerHTML = `
+                    <div style="color: #81c784;">⭕ 大正解！</div>
+                    <div class="explanation">💡 覚え方ヒント：${qData.explanation}</div>
+                `;
+            } else {
+                clickedBtn.style.backgroundColor = '#c62828'; // 不正解は赤
+                clickedBtn.style.borderColor = '#ef9a9a';
+                feedbackBox.innerHTML = `
+                    <div style="color: #e57373;">❌ 残念！ 正解は「${qData.answer}」でした。</div>
+                    <div class="explanation">💡 覚え方ヒント：${qData.explanation}</div>
+                `;
+            }
+
+            document.getElementById('scoreText').innerText = `正解数: ${score}`;
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < 10) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+
+            document.getElementById('finalScore').innerText = `${score} / 10 問 正解！`;
+
+            const resultMsg = document.getElementById('resultMsg');
+            if (score === 10) {
+                resultMsg.innerText = '🌕 パーフェクト！きみは太陽系マスターだ！';
+            } else if (score >= 7) {
+                resultMsg.innerText = '🌟 すごい！太陽系のことをかなり覚えているね！';
+            } else if (score >= 5) {
+                resultMsg.innerText = '🚀 あと少し！「水金地火木土天海」を唱えてもう一度挑戦しよう！';
+            } else {
+                resultMsg.innerText = '📖 クイズを何度もやって、惑星の順番や特徴を覚えよう！';
+            }
+        }
+
+        startNewQuiz();
+    </script>
+</body>
+</html>
