@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Shogi - 宇宙将棋</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800;900&family=Yuji+Syuku&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-bg-1: #090a0f;
+            --space-bg-2: #1b2735;
+            --panel-bg: rgba(13, 20, 40, 0.85);
+            --neon-blue: #00e5ff;
+            --neon-gold: #ffd700;
+            --neon-red: #ff5252;
+            --board-bg: rgba(20, 30, 55, 0.9);
+            --board-line: #00e5ff;
+            --piece-sente: #ffffff;
+            --piece-gote: #ffab40;
+            --cell-size: 52px;
+        }
+
+        @media (max-width: 600px) {
+            :root {
+                --cell-size: 38px;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            user-select: none;
+        }
+
+        /* 宇宙背景デザイン */
+        body {
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            color: #ffffff;
+            padding: 20px 10px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 背景の星アニメーション */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(1.5px 1.5px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffd700, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, #80d8ff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #ff80ab, rgba(0,0,0,0));
+            background-size: 250px 250px;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-family: 'Yuji Syuku', serif;
+            color: var(--neon-gold);
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.6), 0 0 20px rgba(0, 229, 255, 0.4);
+            letter-spacing: 4px;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 900px;
+        }
+
+        /* 駒台 */
+        .komadai-container {
+            width: calc(var(--cell-size) * 9 + 20px);
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+        }
+
+        .komadai-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--neon-blue);
+            margin-right: 10px;
+        }
+
+        .komadai-pieces {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: calc(var(--cell-size) * 0.8);
+        }
+
+        /* 将棋盤 */
+        .shogi-board {
+            display: grid;
+            grid-template-columns: repeat(9, var(--cell-size));
+            grid-template-rows: repeat(9, var(--cell-size));
+            background: var(--board-bg);
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.4), inset 0 0 15px rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .cell {
+            width: var(--cell-size);
+            height: var(--cell-size);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .cell:hover {
+            background: rgba(0, 229, 255, 0.15);
+        }
+
+        .cell.selected {
+            background: rgba(255, 215, 0, 0.3) !important;
+            box-shadow: inset 0 0 10px var(--neon-gold);
+        }
+
+        .cell.movable {
+            background: rgba(0, 229, 255, 0.25);
+        }
+
+        .cell.movable::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        /* 駒のスタイル */
+        .piece {
+            font-family: 'Yuji Syuku', serif;
+            font-size: calc(var(--cell-size) * 0.55);
+            font-weight: bold;
+            width: calc(var(--cell-size) * 0.85);
+            height: calc(var(--cell-size) * 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            transition: transform 0.2s ease;
+        }
+
+        .piece.sente {
+            color: var(--piece-sente);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .piece.gote {
+            color: var(--piece-gote);
+            text-shadow: 0 0 8px rgba(255, 171, 64, 0.8);
+            border: 1px solid rgba(255, 171, 64, 0.4);
+            background: rgba(255, 171, 64, 0.05);
+            transform: rotate(180deg);
+        }
+
+        .piece.promoted {
+            color: var(--neon-red) !important;
+            text-shadow: 0 0 10px var(--neon-red) !important;
+        }
+
+        /* 情報パネル */
+        .status-panel {
+            width: calc(var(--cell-size) * 9 + 20px);
+            background: var(--panel-bg);
+            border: 2px solid var(--border-color, var(--neon-blue));
+            border-radius: 12px;
+            padding: 12px 15px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .turn-indicator {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--neon-gold);
+            margin-bottom: 8px;
+        }
+
+        .control-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--panel-bg);
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            padding: 8px 18px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌌 COSMIC SHOGI 🌌</h1>
+    </header>
+
+    <div class="game-container">
+        <!-- 後手（相手）の駒台 -->
+        <div class="komadai-container">
+            <span class="komadai-title">後手 持ち駒:</span>
+            <div class="komadai-pieces" id="goteKomadai"></div>
+        </div>
+
+        <!-- 将棋盤 -->
+        <div class="shogi-board" id="board"></div>
+
+        <!-- 先手（自分）の駒台 -->
+        <div class="komadai-container">
+            <span class="komadai-title">先手 持ち駒:</span>
+            <div class="komadai-pieces" id="senteKomadai"></div>
+        </div>
+
+        <!-- コントロールパネル -->
+        <div class="status-panel">
+            <div class="turn-indicator" id="turnText">▲ 先手（あなた）の手番です</div>
+            <div class="control-btns">
+                <button class="btn" onclick="initGame()">対局リセット 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 駒の初期配置データ
+        const INITIAL_BOARD = [
+            [{type:'香',owner:'gote'},{type:'桂',owner:'gote'},{type:'銀',owner:'gote'},{type:'金',owner:'gote'},{type:'王',owner:'gote'},{type:'金',owner:'gote'},{type:'銀',owner:'gote'},{type:'桂',owner:'gote'},{type:'香',owner:'gote'}],
+            [null,{type:'飛',owner:'gote'},null,null,null,null,null,{type:'角',owner:'gote'},null],
+            [{type:'歩',owner:'gote'},{type:'歩',owner:'gote'},{type:'歩',owner:'gote'},{type:'歩',owner:'gote'},{type:'歩',owner:'gote'},{type:'歩',owner:'gote'},{type:'歩',owner:'gote'},{type:'歩',owner:'gote'},{type:'歩',owner:'gote'}],
+            [null,null,null,null,null,null,null,null,null],
+            [null,null,null,null,null,null,null,null,null],
+            [null,null,null,null,null,null,null,null,null],
+            [{type:'歩',owner:'sente'},{type:'歩',owner:'sente'},{type:'歩',owner:'sente'},{type:'歩',owner:'sente'},{type:'歩',owner:'sente'},{type:'歩',owner:'sente'},{type:'歩',owner:'sente'},{type:'歩',owner:'sente'},{type:'歩',owner:'sente'}],
+            [null,{type:'角',owner:'sente'},null,null,null,null,null,{type:'飛',owner:'sente'},null],
+            [{type:'香',owner:'sente'},{type:'桂',owner:'sente'},{type:'銀',owner:'sente'},{type:'金',owner:'sente'},{type:'玉',owner:'sente'},{type:'金',owner:'sente'},{type:'銀',owner:'sente'},{type:'桂',owner:'sente'},{type:'香',owner:'sente'}]
+        ];
+
+        // 成り駒の定義
+        const PROMOTE_MAP = { '歩':'と', '香':'成香', '桂':'成桂', '銀':'成銀', '角':'馬', '飛':'竜' };
+        const UNPROMOTE_MAP = { 'と':'歩', '成香':'香', '成桂':'桂', '成銀':'銀', '馬':'角', '竜':'飛' };
+
+        let boardState = [];
+        let senteMochigoma = [];
+        let goteMochigoma = [];
+        let currentTurn = 'sente'; // sente or gote
+        let selectedCell = null; // {r, c} or {mochigomaIndex}
+        let movableCells = [];
+
+        // ゲーム初期化
+        function initGame() {
+            boardState = JSON.parse(JSON.stringify(INITIAL_BOARD));
+            senteMochigoma = [];
+            goteMochigoma = [];
+            currentTurn = 'sente';
+            selectedCell = null;
+            movableCells = [];
+            updateStatus();
+            render();
+        }
+
+        // 盤面描画
+        function render() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+
+                    // 選択・移動可能状態のクラス追加
+                    if (selectedCell && selectedCell.r === r && selectedCell.c === c) cell.classList.add('selected');
+                    if (movableCells.some(m => m.r === r && m.c === c)) cell.classList.add('movable');
+
+                    const pieceData = boardState[r][c];
+                    if (pieceData) {
+                        const pieceEl = document.createElement('div');
+                        pieceEl.className = `piece ${pieceData.owner}`;
+                        if (UNPROMOTE_MAP[pieceData.type]) pieceEl.classList.add('promoted');
+                        pieceEl.innerText = pieceData.type;
+                        cell.appendChild(pieceEl);
+                    }
+
+                    cell.onclick = () => handleCellClick(r, c);
+                    boardEl.appendChild(cell);
+                }
+            }
+
+            renderKomadai();
+        }
+
+        // 駒台描画
+        function renderKomadai() {
+            const senteEl = document.getElementById('senteKomadai');
+            const goteEl = document.getElementById('goteKomadai');
+            senteEl.innerHTML = '';
+            goteEl.innerHTML = '';
+
+            senteMochigoma.forEach((p, idx) => {
+                const pieceEl = document.createElement('div');
+                pieceEl.className = 'piece sente';
+                pieceEl.innerText = p;
+                if (selectedCell && selectedCell.mochigomaIndex === idx && selectedCell.owner === 'sente') {
+                    pieceEl.style.boxShadow = '0 0 10px #ffd700';
+                }
+                pieceEl.onclick = (e) => { e.stopPropagation(); handleMochigomaClick(idx, 'sente'); };
+                senteEl.appendChild(pieceEl);
+            });
+
+            goteMochigoma.forEach((p, idx) => {
+                const pieceEl = document.createElement('div');
+                pieceEl.className = 'piece gote';
+                pieceEl.innerText = p;
+                if (selectedCell && selectedCell.mochigomaIndex === idx && selectedCell.owner === 'gote') {
+                    pieceEl.style.boxShadow = '0 0 10px #ffd700';
+                }
+                pieceEl.onclick = (e) => { e.stopPropagation(); handleMochigomaClick(idx, 'gote'); };
+                goteEl.appendChild(pieceEl);
+            });
+        }
+
+        // マスクリック処理
+        function handleCellClick(r, c) {
+            const piece = boardState[r][c];
+
+            // 1. 移動先の選択処理
+            if (selectedCell) {
+                const isMovable = movableCells.some(m => m.r === r && m.c === c);
+                if (isMovable) {
+                    executeMove(selectedCell, {r, c});
+                    return;
+                }
+            }
+
+            // 2. 自分の駒を選択
+            if (piece && piece.owner === currentTurn) {
+                selectedCell = {r, c};
+                movableCells = getMovableCells(r, c, piece);
+                render();
+            } else {
+                selectedCell = null;
+                movableCells = [];
+                render();
+            }
+        }
+
+        // 持ち駒クリック処理
+        function handleMochigomaClick(idx, owner) {
+            if (owner !== currentTurn) return;
+
+            selectedCell = { mochigomaIndex: idx, owner };
+            // 持ち駒を打てる空きマスを検索
+            movableCells = [];
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (!boardState[r][c]) {
+                        movableCells.push({r, c});
+                    }
+                }
+            }
+            render();
+        }
+
+        // 移動・打ち実行
+        function executeMove(from, to) {
+            if (from.mochigomaIndex !== undefined) {
+                // 持ち駒を打つ
+                const list = from.owner === 'sente' ? senteMochigoma : goteMochigoma;
+                const pType = list.splice(from.mochigomaIndex, 1)[0];
+                boardState[to.r][to.c] = { type: pType, owner: from.owner };
+            } else {
+                // 盤上の駒を移動
+                const p = boardState[from.r][from.c];
+                const target = boardState[to.r][to.c];
+
+                // 相手の駒を取る
+                if (target) {
+                    let rawType = UNPROMOTE_MAP[target.type] || target.type;
+                    if (from.owner === 'sente') senteMochigoma.push(rawType);
+                    else goteMochigoma.push(rawType);
+                }
+
+                // 成り判定（敵陣に入った場合）
+                let isPromoted = false;
+                const isEnemyZone = (from.owner === 'sente' && to.r <= 2) || (from.owner === 'gote' && to.r >= 6);
+                if (PROMOTE_MAP[p.type] && isEnemyZone) {
+                    if (confirm('成りますか？')) {
+                        p.type = PROMOTE_MAP[p.type];
+                    }
+                }
+
+                boardState[to.r][to.c] = p;
+                boardState[from.r][from.c] = null;
+            }
+
+            // 手番交代
+            currentTurn = currentTurn === 'sente' ? 'gote' : 'sente';
+            selectedCell = null;
+            movableCells = [];
+            updateStatus();
+            render();
+        }
+
+        // 簡易的な利き（移動可能範囲）計算
+        function getMovableCells(r, c, piece) {
+            const moves = [];
+            const dir = piece.owner === 'sente' ? -1 : 1; // 進行方向
+
+            // 基本の動き定義（簡易的）
+            const checkAndAdd = (nr, nc) => {
+                if (nr >= 0 && nr < 9 && nc >= 0 && nc < 9) {
+                    const target = boardState[nr][nc];
+                    if (!target || target.owner !== piece.owner) {
+                        moves.push({r: nr, c: nc});
+                        return !target; // 障害物がなければさらに進める
+                    }
+                }
+                return false;
+            };
+
+            const type = piece.type;
+            if (type === '歩') {
+                checkAndAdd(r + dir, c);
+            } else if (type === '王' || type === '玉') {
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        if (dr !== 0 || dc !== 0) checkAndAdd(r + dr, c + dc);
+                    }
+                }
+            } else if (type === '金' || type === 'と' || type === '成香' || type === '成桂' || type === '成銀') {
+                const goldMoves = [[dir,0], [dir,-1], [dir,1], [0,-1], [0,1], [-dir,0]];
+                goldMoves.forEach(([dr, dc]) => checkAndAdd(r + dr, c + dc));
+            } else if (type === '銀') {
+                const silverMoves = [[dir,0], [dir,-1], [dir,1], [-dir,-1], [-dir,1]];
+                silverMoves.forEach(([dr, dc]) => checkAndAdd(r + dr, c + dc));
+            } else if (type === '桂') {
+                checkAndAdd(r + dir * 2, c - 1);
+                checkAndAdd(r + dir * 2, c + 1);
+            } else if (type === '香') {
+                let step = 1;
+                while (checkAndAdd(r + dir * step, c)) step++;
+            } else if (type === '飛' || type === '竜') {
+                [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dr,dc]) => {
+                    let step = 1;
+                    while (checkAndAdd(r + dr * step, c + dc * step)) step++;
+                });
+                if (type === '竜') {
+                    [[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([dr,dc]) => checkAndAdd(r + dr, c + dc));
+                }
+            } else if (type === '角' || type === '馬') {
+                [[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([dr,dc]) => {
+                    let step = 1;
+                    while (checkAndAdd(r + dr * step, c + dc * step)) step++;
+                });
+                if (type === '馬') {
+                    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dr,dc]) => checkAndAdd(r + dr, c + dc));
+                }
+            }
+
+            return moves;
+        }
+
+        // ステータス表示更新
+        function updateStatus() {
+            const turnText = document.getElementById('turnText');
+            if (currentTurn === 'sente') {
+                turnText.innerText = '▲ 先手（あなた）の手番です';
+                turnText.style.color = 'var(--neon-gold)';
+            } else {
+                turnText.innerText = '△ 後手の手番です';
+                turnText.style.color = 'var(--piece-gote)';
+            }
+        }
+
+        // ゲーム起動
+        initGame();
+    </script>
+</body>
+</html>
