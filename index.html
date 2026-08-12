@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>たのしく覚える！元素記号（げんそきごう）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-blue: #1e3c72;
+            --bg-blue-light: #2a5298;
+            --card-bg: #ffffff;
+            --accent-yellow: #ffde59;
+            --accent-orange: #ff914d;
+            --accent-pink: #ff66c4;
+            --accent-green: #7ed957;
+            --accent-cyan: #00c2cb;
+            --border-dark: #0a192f;
+            --border-thick: 4px solid #0a192f;
+            --text-dark: #0a192f;
+            --shadow-pop: 5px 5px 0px #0a192f;
+            --shadow-pop-lg: 8px 8px 0px #0a192f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #102a45 0%, #1e4d8c 50%, #2a65b5 100%);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            padding: 20px 10px 60px;
+            min-height: 100vh;
+        }
+
+        /* 濃いめの縁取りスタイルの共通ルール */
+        .thick-border {
+            border: var(--border-thick);
+            box-shadow: var(--shadow-pop);
+        }
+
+        header {
+            max-width: 900px;
+            margin: 0 auto 30px;
+            text-align: center;
+            background-color: var(--accent-yellow);
+            padding: 25px 15px;
+            border-radius: 24px;
+            border: 5px solid var(--border-dark);
+            box-shadow: var(--shadow-pop-lg);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #0a192f;
+            text-shadow: 2px 2px 0px #fff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1e3c72;
+            background: #ffffff;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+            border: 3px solid var(--border-dark);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        /* セクションスタイル */
+        .section-card {
+            background-color: #f4f9ff;
+            border-radius: 20px;
+            border: 4px solid var(--border-dark);
+            box-shadow: var(--shadow-pop-lg);
+            padding: 25px;
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            background-color: var(--bg-blue-light);
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: 3px solid var(--border-dark);
+            box-shadow: 4px 4px 0px var(--border-dark);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* 語呂合わせセクション */
+        .goro-banner {
+            background-color: #fff9db;
+            border: 3px solid var(--border-dark);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.8;
+            box-shadow: 3px 3px 0px var(--border-dark);
+        }
+
+        .goro-highlight {
+            color: #e63946;
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-decoration: underline decoration-style wavy;
+        }
+
+        /* 元素カードグリッド */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .element-card {
+            background: white;
+            border: 4px solid var(--border-dark);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: var(--shadow-pop);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .element-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 7px 7px 0px var(--border-dark);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--border-dark);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        .atomic-num {
+            font-size: 0.9rem;
+            font-weight: 800;
+            background: #e2e8f0;
+            padding: 3px 8px;
+            border-radius: 8px;
+            border: 2px solid var(--border-dark);
+        }
+
+        .symbol {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #1e3c72;
+            line-height: 1;
+            text-shadow: 1px 1px 0px #0a192f;
+        }
+
+        .name-jp {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--border-dark);
+        }
+
+        .reading {
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: 800;
+        }
+
+        .trick-box {
+            background-color: #eef7ff;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .trick-title {
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: #00a896;
+            text-transform: uppercase;
+        }
+
+        .trick-text {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #2b2d42;
+            margin-top: 2px;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 2px solid var(--border-dark);
+            background: var(--accent-yellow);
+        }
+
+        /* クイズセクション */
+        .quiz-card {
+            background: #ffffff;
+            border: 4px solid var(--border-dark);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow-pop);
+        }
+
+        .quiz-question {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--border-dark);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-btn {
+            background-color: var(--accent-cyan);
+            color: #0a192f;
+            border: 3px solid var(--border-dark);
+            padding: 14px 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--border-dark);
+            transition: all 0.1s;
+        }
+
+        .quiz-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0px var(--border-dark);
+        }
+
+        .quiz-feedback {
+            font-size: 1.3rem;
+            font-weight: 900;
+            min-height: 40px;
+            margin-top: 10px;
+        }
+
+        .next-btn {
+            background-color: var(--accent-green);
+            color: var(--border-dark);
+            border: 3px solid var(--border-dark);
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /* コツ・ポイントカード */
+        .tip-list {
+            list-style: none;
+        }
+
+        .tip-item {
+            background: #ffffff;
+            border: 3px solid var(--border-dark);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tip-badge {
+            background: var(--accent-pink);
+            color: white;
+            font-weight: 900;
+            border: 2px solid var(--border-dark);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .tip-text {
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            color: #ffffff;
+            font-weight: 800;
+            margin-top: 40px;
+            text-shadow: 2px 2px 0px var(--border-dark);
+        }
+
+        /* 検索/フィルターバー */
+        .filter-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border: 3px solid var(--border-dark);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 800;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            outline: none;
+        }
+
+        .filter-btn {
+            padding: 10px 16px;
+            border: 3px solid var(--border-dark);
+            border-radius: 12px;
+            background-color: white;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-dark);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-orange);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🧪 たのしく覚える！元素記号 🧪</h1>
+        <p>小学校・中学校の理科で大活躍！</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 覚えるコツセクション -->
+        <div class="section-card">
+            <h2 class="section-title">💡 元素記号を覚える3つのコツ</h2>
+            <div class="tip-list">
+                <div class="tip-item">
+                    <div class="tip-badge">1</div>
+                    <div class="tip-text"><strong>1文字目は絶対に「大文字」、2文字目は「小文字」！</strong><br>例：Na（× NA, × na）</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-badge" style="background: var(--accent-cyan);">2</div>
+                    <div class="tip-text"><strong>英語名・ラテン語名の頭文字から来ているよ！</strong><br>Hydrogen（水素）→ <strong>H</strong>、Oxygen（酸素）→ <strong>O</strong></div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-badge" style="background: var(--accent-green);">3</div>
+                    <div class="tip-text"><strong>「リズム」や「語呂合わせ」で口に出して覚えよう！</strong><br>「水兵リーベ僕の船…」の歌が超有名！</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 語呂合わせセクション -->
+        <div class="section-card">
+            <h2 class="section-title">🎵 魔法の呪文「水兵リーベ僕の船」</h2>
+            <div class="goro-banner">
+                <span class="goro-highlight">水(H) 兵(He)</span> <span class="goro-highlight">リー(Li) ベ(Be)</span> <span class="goro-highlight">ボ(B) ク(C)</span> の <span class="goro-highlight">船(N,O,F,Ne)</span><br>
+                <small style="font-size:0.9rem; color:#555;">（スイヘイ リーベ ボクノフネ）</small><br><br>
+                <span class="goro-highlight">七(Na) 友(Mg)</span> <span class="goro-highlight">ある(Al) シ(Si)</span> <span class="goro-highlight">ぞ(P) 硫(S)</span> <span class="goro-highlight">ク(Cl) ア(Ar)</span> <span class="goro-highlight">ル(K) カ(Ca)</span><br>
+                <small style="font-size:0.9rem; color:#555;">（ナナトモ アルシ ゾ ク アル カ）</small>
+            </div>
+        </div>
+
+        <!-- 元素カード一覧 -->
+        <div class="section-card">
+            <h2 class="section-title">🔍 身近な元素図鑑（ずかん）</h2>
+
+            <div class="filter-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="元素名や記号で検索（例: 酸素、H、Na）...">
+            </div>
+
+            <div class="grid" id="elementGrid">
+                <!-- JSで動的に追加、または初期レンダリング -->
+            </div>
+        </div>
+
+        <!-- クイズセクション -->
+        <div class="section-card">
+            <h2 class="section-title">🎮 元素記号クイズにチャレンジ！</h2>
+            <div class="quiz-card">
+                <div class="quiz-question" id="quizQuestion">問題読み込み中...</div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-feedback" id="quizFeedback"></div>
+                <button class="next-btn" id="nextBtn" style="display:none;" onclick="loadNextQuestion()">次の問題へ ➔</button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>単一HTMLファイルで作る 理科学習Webページ | GitHub Pagesで公開可能！</p>
+    </footer>
+
+    <script>
+        // 元素データ（小学生〜中学生でよく出る代表的な元素）
+        const elements = [
+            { num: 1, symbol: 'H', name: '水素', reading: 'すいそ', trick: '「H」は英語の Hydrogen。水のもと！', tag: '空気・ガス' },
+            { num: 2, symbol: 'He', name: 'ヘリウム', reading: 'へりうむ', trick: '「He」りうむ。風船を浮かせる軽いガス！', tag: '空気・ガス' },
+            { num: 3, symbol: 'Li', name: 'リチウム', reading: 'りちうむ', trick: '「Li」チウム。スマホの電池に入っているよ！', tag: '金属' },
+            { num: 6, symbol: 'C', name: '炭素', reading: 'たんそ', trick: '「C」arbon（カーボン）。シャープペンの芯やダイヤモンド！', tag: '生活・身近' },
+            { num: 7, symbol: 'N', name: '窒素', reading: 'ちっそ', trick: '「N」itrogen。空気の約8割（80%）をしめている！', tag: '空気・ガス' },
+            { num: 8, symbol: 'O', name: '酸素', reading: 'さんそ', trick: '「O」xygen（オキシゲン）。息を吸うときに必要なガス！', tag: '空気・ガス' },
+            { num: 11, symbol: 'Na', name: 'ナトリウム', reading: 'なとりうむ', trick: '「Na」トリウム。食塩（塩化ナトリウム）に入っている！', tag: '生活・身近' },
+            { num: 12, symbol: 'Mg', name: 'マグネシウム', reading: 'まぐねしうむ', trick: '「Mg」。軽くて丈夫な金属！豆腐を固める「にがり」にも！', tag: '金属' },
+            { num: 13, symbol: 'Al', name: 'アルミニウム', reading: 'あるみにうむ', trick: '「Al」ミ缶や1円玉でおなじみ！', tag: '金属' },
+            { num: 17, symbol: 'Cl', name: '塩素', reading: 'えんそ', trick: '「Cl」えんそ。プールの消毒のにおいのもと！', tag: '生活・身近' },
+            { num: 19, symbol: 'K', name: 'カリウム', reading: 'かりうむ', trick: '「K」アリウム。バナナや野菜にたっぷり入っている！', tag: '栄養・体' },
+            { num: 20, symbol: 'Ca', name: 'カルシウム', reading: 'かるしうむ', trick: '「Ca」ルシウム。骨や歯を強くする牛乳の成分！', tag: '栄養・体' },
+            { num: 26, symbol: 'Fe', name: '鉄', reading: 'てつ', trick: '「Fe」つ。磁石にくっつく重い金属！', tag: '金属' },
+            { num: 29, symbol: 'Cu', name: '銅', reading: 'どう', trick: '「Cu」＝キュープラム。10円玉の色！', tag: '金属' },
+            { num: 47, symbol: 'Ag', name: '銀', reading: 'ぎん', trick: '「Ag」＝アージェンタム。ピカピカのコインやアクセサリー！', tag: '金属' },
+            { num: 79, symbol: 'Au', name: '金', reading: 'きん', trick: '「Au」＝オーラム。キラキラ輝く高級な金属！', tag: '金属' }
+        ];
+
+        // カードの描画関数
+        function renderCards(filterText = '') {
+            const grid = document.getElementById('elementGrid');
+            grid.innerHTML = '';
+
+            const filtered = elements.filter(el => {
+                const q = filterText.toLowerCase();
+                return el.name.includes(q) || 
+                       el.symbol.toLowerCase().includes(q) || 
+                       el.reading.includes(q);
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="font-weight:800; color:#666; text-align:center; grid-column: 1/-1;">該当する元素が見つかりませんでした 🔍</p>';
+                return;
+            }
+
+            filtered.forEach(el => {
+                const card = document.createElement('div');
+                card.className = 'element-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="atomic-num">原子番号 ${el.num}</span>
+                        <span class="symbol">${el.symbol}</span>
+                    </div>
+                    <div class="name-jp">${el.name}</div>
+                    <div class="reading">${el.reading}</div>
+                    <div class="trick-box">
+                        <div class="trick-title">💡 覚え方のコツ</div>
+                        <div class="trick-text">${el.trick}</div>
+                    </div>
+                    <span class="tag">${el.tag}</span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 検索フィルターの実行
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderCards(e.target.value);
+        });
+
+        // クイズ機能
+        let currentQuiz = null;
+
+        function generateQuiz() {
+            const feedback = document.getElementById('quizFeedback');
+            const nextBtn = document.getElementById('nextBtn');
+            feedback.innerHTML = '';
+            nextBtn.style.display = 'none';
+
+            // ランダムに1つ正解を選ぶ
+            const target = elements[Math.floor(Math.random() * elements.length)];
+            currentQuiz = target;
+
+            // 質問のタイプ（名前→記号 か 記号→名前）を決定
+            const isSymbolToName = Math.random() > 0.5;
+
+            const questionEl = document.getElementById('quizQuestion');
+            if (isSymbolToName) {
+                questionEl.innerText = `元素記号「 ${target.symbol} 」の元素名は何でしょう？`;
+            } else {
+                questionEl.innerText = `「 ${target.name} 」の元素記号は何でしょう？`;
+            }
+
+            // 選択肢（正解1個点 + 誤り3個）
+            let options = [target];
+            while (options.length < 4) {
+                const randomEl = elements[Math.floor(Math.random() * elements.length)];
+                if (!options.some(o => o.symbol === randomEl.symbol)) {
+                    options.push(randomEl);
+                }
+            }
+            // 選択肢シャッフル
+            options.sort(() => Math.random() - 0.5);
+
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-btn';
+                btn.innerText = isSymbolToName ? opt.name : opt.symbol;
+                btn.onclick = () => checkAnswer(opt, target, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected, correct, btnElement) {
+            const feedback = document.getElementById('quizFeedback');
+            const buttons = document.querySelectorAll('.quiz-btn');
+            
+            // 全ボタン無効化
+            buttons.forEach(b => b.disabled = true);
+
+            if (selected.symbol === correct.symbol) {
+                feedback.innerHTML = '<span style="color:#2a9d8f;">🎉 大正解！すごいぞ！</span>';
+                btnElement.style.backgroundColor = '#7ed957';
+            } else {
+                feedback.innerHTML = `<span style="color:#e63946;">❌ 残念！ 正解は「 ${correct.name}（${correct.symbol}） 」でした！</span>`;
+                btnElement.style.backgroundColor = '#ff6666';
+            }
+
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        function loadNextQuestion() {
+            generateQuiz();
+        }
+
+        // 初期化実行
+        renderCards();
+        generateQuiz();
+    </script>
+</body>
+</html>
