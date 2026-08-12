@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学5年生 1学期の漢字クイズ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-yellow: #fff7d6;          /* 全体の背景色：黄色 */
+            --main-yellow: #ffd54f;        /* ヘッダー・ボタンなどのアクセント黄色 */
+            --btn-green: #4caf50;          /* 4択ボタン：緑色 */
+            --btn-green-hover: #388e3c;    /* ホバー時の緑色 */
+            --border-color: #1b5e20;
+            --text-color: #1b2e1b;
+            --card-bg: #ffffff;
+            --shadow: 4px 4px 0px #1b5e20;
+            --shadow-lg: 6px 6px 0px #1b5e20;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-yellow);
+            color: var(--text-color);
+            padding: 20px 10px 60px;
+            min-height: 100vh;
+        }
+
+        header {
+            max-width: 800px;
+            margin: 0 auto 25px;
+            text-align: center;
+            background-color: var(--main-yellow);
+            padding: 20px 15px;
+            border-radius: 20px;
+            border: 4px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #2e7d32;
+            text-shadow: 2px 2px 0px #ffffff;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #333333;
+            background: #ffffff;
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 15px;
+            border: 2px solid var(--border-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            border: 4px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px dashed var(--border-color);
+        }
+
+        .progress-badge {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 15px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .score-badge {
+            background-color: #fff8e1;
+            color: #f57f17;
+            padding: 5px 15px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .kanji-display {
+            font-size: 5.5rem;
+            font-weight: 900;
+            color: #1b5e20;
+            background-color: #f1f8e9;
+            border: 4px solid var(--border-color);
+            border-radius: 20px;
+            width: 140px;
+            height: 140px;
+            line-height: 135px;
+            margin: 0 auto 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #2e7d32;
+        }
+
+        /* 4たくボタン（緑色） */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            background-color: var(--btn-green);
+            color: #ffffff;
+            border: 3px solid var(--border-color);
+            padding: 16px 10px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.1s ease;
+        }
+
+        .option-btn:hover {
+            background-color: var(--btn-green-hover);
+        }
+
+        .option-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--border-color);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+
+        .feedback-box {
+            min-height: 50px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin: 10px 0;
+        }
+
+        .example-box {
+            background-color: #e8f5e9;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #1b5e20;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .control-btn {
+            background-color: var(--main-yellow);
+            color: var(--text-color);
+            border: 3px solid var(--border-color);
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .control-btn:hover {
+            background-color: #ffca28;
+        }
+
+        /* 結果画面 */
+        .result-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .result-score {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #e65100;
+            margin-bottom: 15px;
+        }
+
+        .result-msg {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>✏️ 小学5年生（1学期）漢字クイズ ✏️</h1>
+        <p>1回10問！ ランダムで正しい読み方を選ぼう！</p>
+    </header>
+
+    <div class="container">
+        <!-- クイズ画面 -->
+        <div class="card" id="quizScreen">
+            <div class="status-bar">
+                <span class="progress-badge" id="progressText">第 1 問 / 全 10 問</span>
+                <span class="score-badge" id="scoreText">正解数: 0</span>
+            </div>
+
+            <div class="kanji-display" id="kanjiDisplay">圧</div>
+            <div class="question-text">この漢字の正しい読み方はどれかな？</div>
+
+            <div class="options-grid" id="optionsGrid">
+                <!-- 4たくボタンがここに自動で入ります -->
+            </div>
+
+            <div class="feedback-box" id="feedbackBox"></div>
+
+            <button class="control-btn" id="nextBtn" style="display: none;" onclick="nextQuestion()">次の問題へ ➔</button>
+        </div>
+
+        <!-- 結果画面 -->
+        <div class="card" id="resultScreen" style="display: none;">
+            <div class="result-title">🎉 クイズしゅうりょう！ 🎉</div>
+            <div class="result-score" id="finalScore">10 / 10 問 正解！</div>
+            <div class="result-msg" id="resultMsg">すばらしい！全問正解です！</div>
+            <button class="control-btn" onclick="startNewQuiz()">もう一度挑戦する 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        // 小学5年生1学期相当の漢字問題データ（全30問から毎回10問ランダム出題）
+        const allKanjiData = [
+            { kanji: "圧", answer: "あつ", options: ["あつ", "えん", "おう", "かん"], example: "水圧（すいあつ）" },
+            { kanji: "移", answer: "い", options: ["い", "う", "え", "お"], example: "移動（いどう）" },
+            { kanji: "因", answer: "いん", options: ["いん", "おん", "かん", "げん"], example: "原因（げんいん）" },
+            { kanji: "永", answer: "えい", options: ["えい", "おう", "きゅう", "しょう"], example: "永久（えいきゅう）" },
+            { kanji: "営", answer: "えい", options: ["えい", "かん", "けい", "じょう"], example: "営業（えいぎょう）" },
+            { kanji: "衛", answer: "えい", options: ["えい", "かん", "ぼう", "しゅう"], example: "衛生（えいせい）" },
+            { kanji: "易", answer: "やさ（しい）", options: ["やさ（しい）", "むずか（しい）", "たの（しい）", "うれ（しい）"], example: "易しい（やさしい）" },
+            { kanji: "益", answer: "えき", options: ["えき", "そん", "がい", "り"], example: "利益（りえき）" },
+            { kanji: "演", answer: "えん", options: ["えん", "かん", "けい", "しょう"], example: "演奏（えんそう）" },
+            { kanji: "応", answer: "おう", options: ["おう", "かん", "しん", "たい"], example: "応援（おうえん）" },
+            { kanji: "往", answer: "おう", options: ["おう", "らい", "こう", "そう"], example: "往復（おうふく）" },
+            { kanji: "桜", answer: "さくら", options: ["さくら", "うめ", "まつ", "たけ"], example: "桜の花（さくらのはな）" },
+            { kanji: "恩", answer: "おん", options: ["おん", "かん", "けい", "じょう"], example: "恩返し（おんがえし）" },
+            { kanji: "可", answer: "か", options: ["か", "ふ", "とう", "り"], example: "可能（かのう）" },
+            { kanji: "仮", answer: "かり", options: ["かり", "ほん", "まこと", "うそ"], example: "仮名（かな）" },
+            { kanji: "価", answer: "か", options: ["か", "だい", "ね", "あたい"], example: "価格（かかく）" },
+            { kanji: "河", answer: "かわ", options: ["かわ", "うみ", "いけ", "みず"], example: "河川（かせん）" },
+            { kanji: "過", answer: "す（ごす）", options: ["す（ごす）", "の（ぼる）", "お（ちる）", "はし（る）"], example: "過ごす（すごす）" },
+            { kanji: "賀", answer: "が", options: ["が", "しゅく", "いわ", "お祝い"], example: "年賀状（ねんがじょう）" },
+            { kanji: "快", answer: "こころよ（い）", options: ["こころよ（い）", "たの（しい）", "くる（しい）", "かな（しい）"], example: "快い（こころよい）" },
+            { kanji: "解", answer: "と（く）", options: ["と（く）", "むす（ぶ）", "わか（る）", "し（る）"], example: "解く（とく）" },
+            { kanji: "格", answer: "かく", options: ["かく", "こう", "きく", "けい"], example: "合格（ごうかく）" },
+            { kanji: "確", answer: "たしか", options: ["たしか", "あやしい", "うそ", "ほんとう"], example: "確かめる（たしかめる）" },
+            { kanji: "額", answer: "ひたい", options: ["ひたい", "あたま", "かお", "め"], example: "額（ひたい）" },
+            { kanji: "刊", answer: "かん", options: ["かん", "さつ", "ほん", "しゅう"], example: "新刊（しんかん）" },
+            { kanji: "幹", answer: "みき", options: ["みき", "えだ", "は", "ね"], example: "木の幹（きのみき）" },
+            { kanji: "慣", answer: "な（れる）", options: ["な（れる）", "おぼ（える）", "まな（ぶ）", "わす（れる）"], example: "慣れる（なれる）" },
+            { kanji: "眼", answer: "め", options: ["め", "みみ", "はな", "くち"], example: "眼科（がんか）" },
+            { kanji: "基", answer: "もと", options: ["もと", "さき", "うえ", "した"], example: "基本（きほん）" },
+            { kanji: "寄", answer: "よ（る）", options: ["よ（る）", "はな（れる）", "むか（う）", "かえ（る）"], example: "立ち寄る（たちよる）" }
+        ];
+
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+
+        // 配列をシャッフルする関数
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // 新しいクイズの開始（10問ランダム抽出）
+        function startNewQuiz() {
+            const shuffledAll = shuffleArray(allKanjiData);
+            currentQuestions = shuffledAll.slice(0, 10);
+            currentIndex = 0;
+            score = 0;
+
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('resultScreen').style.display = 'none';
+
+            showQuestion();
+        }
+
+        // 問題の表示
+        function showQuestion() {
+            const q = currentQuestions[currentIndex];
+
+            document.getElementById('progressText').innerText = `第 ${currentIndex + 1} 問 / 全 10 問`;
+            document.getElementById('scoreText').innerText = `正解数: ${score}`;
+            document.getElementById('kanjiDisplay').innerText = q.kanji;
+            document.getElementById('feedbackBox').innerHTML = '';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            // 4択ボタンの作成（順序もシャッフル）
+            const shuffledOptions = shuffleArray(q.options);
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt, q, btn);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        // 回答チェック
+        function checkAnswer(selectedOpt, questionData, clickedBtn) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            const feedbackBox = document.getElementById('feedbackBox');
+
+            if (selectedOpt === questionData.answer) {
+                score++;
+                clickedBtn.style.backgroundColor = '#2e7d32'; // 正解時
+                feedbackBox.innerHTML = `
+                    <div style="color: #2e7d32;">⭕ 大正解！</div>
+                    <div class="example-box">使い方例：${questionData.example}</div>
+                `;
+            } else {
+                clickedBtn.style.backgroundColor = '#d32f2f'; // 不正解時
+                feedbackBox.innerHTML = `
+                    <div style="color: #d32f2f;">❌ 残念！ 正解は「${questionData.answer}」でした。</div>
+                    <div class="example-box">使い方例：${questionData.example}</div>
+                `;
+            }
+
+            document.getElementById('scoreText').innerText = `正解数: ${score}`;
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        // 次の問題へ
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < 10) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 結果画面の表示
+        function showResult() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+
+            document.getElementById('finalScore').innerText = `${score} / 10 問 正解！`;
+
+            const resultMsg = document.getElementById('resultMsg');
+            if (score === 10) {
+                resultMsg.innerText = '💯 パーフェクト！5年生の漢字マスターだね！';
+            } else if (score >= 7) {
+                resultMsg.innerText = '🌟 すごい！よく勉強できているね！';
+            } else if (score >= 5) {
+                resultMsg.innerText = '👍 あと少し！繰り返し練習してみよう！';
+            } else {
+                resultMsg.innerText = '📖 もう一度挑戦して、漢字を覚えよう！';
+            }
+        }
+
+        // クイズ開始
+        startNewQuiz();
+    </script>
+</body>
+</html>
