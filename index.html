@@ -39,12 +39,6 @@
             min-height: 100vh;
         }
 
-        /* 濃いめの縁取りスタイルの共通ルール */
-        .thick-border {
-            border: var(--border-thick);
-            box-shadow: var(--shadow-pop);
-        }
-
         header {
             max-width: 900px;
             margin: 0 auto 30px;
@@ -121,7 +115,7 @@
 
         .goro-highlight {
             color: #e63946;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 900;
             text-decoration: underline decoration-style wavy;
         }
@@ -334,7 +328,6 @@
             text-shadow: 2px 2px 0px var(--border-dark);
         }
 
-        /* 検索/フィルターバー */
         .filter-container {
             display: flex;
             gap: 10px;
@@ -352,21 +345,6 @@
             font-weight: 800;
             box-shadow: 3px 3px 0px var(--border-dark);
             outline: none;
-        }
-
-        .filter-btn {
-            padding: 10px 16px;
-            border: 3px solid var(--border-dark);
-            border-radius: 12px;
-            background-color: white;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px var(--border-dark);
-        }
-
-        .filter-btn.active {
-            background-color: var(--accent-orange);
-            color: white;
         }
     </style>
 </head>
@@ -393,19 +371,23 @@
                 </div>
                 <div class="tip-item">
                     <div class="tip-badge" style="background: var(--accent-green);">3</div>
-                    <div class="tip-text"><strong>「リズム」や「語呂合わせ」で口に出して覚えよう！</strong><br>「水兵リーベ僕の船…」の歌が超有名！</div>
+                    <div class="tip-text"><strong>「リズム」や「語呂合わせ」で口に出して覚えよう！</strong><br>「水兵リーベ…」の呪文で一気にマスター！</div>
                 </div>
             </div>
         </div>
 
-        <!-- 語呂合わせセクション -->
+        <!-- 語呂合わせセクション（ご指定通り更新済み） -->
         <div class="section-card">
             <h2 class="section-title">🎵 魔法の呪文「水兵リーベ僕の船」</h2>
             <div class="goro-banner">
-                <span class="goro-highlight">水(H) 兵(He)</span> <span class="goro-highlight">リー(Li) ベ(Be)</span> <span class="goro-highlight">ボ(B) ク(C)</span> の <span class="goro-highlight">船(N,O,F,Ne)</span><br>
-                <small style="font-size:0.9rem; color:#555;">（スイヘイ リーベ ボクノフネ）</small><br><br>
-                <span class="goro-highlight">七(Na) 友(Mg)</span> <span class="goro-highlight">ある(Al) シ(Si)</span> <span class="goro-highlight">ぞ(P) 硫(S)</span> <span class="goro-highlight">ク(Cl) ア(Ar)</span> <span class="goro-highlight">ル(K) カ(Ca)</span><br>
-                <small style="font-size:0.9rem; color:#555;">（ナナトモ アルシ ゾ ク アル カ）</small>
+                <p style="margin-bottom: 12px;">
+                    <span class="goro-highlight">水(H) 兵(He)</span> <span class="goro-highlight">リー(Li) ベ(Be)</span> <span class="goro-highlight">ボ(B) ク(C)</span> の <span class="goro-highlight">船(N,O,F,Ne)</span><br>
+                    <small style="font-size:0.85rem; color:#555;">（スイヘイ リーベ ボクノフネ）</small>
+                </p>
+                <p>
+                    <span class="goro-highlight">ナ(Na) マ(Mg) エ(Al) ガ(Si)</span> <span class="goro-highlight">ア(P) ル(S) シ(Cl)</span> <span class="goro-highlight">ッ(Ar) プ(K) ス(Ca)</span><br>
+                    <small style="font-size:0.85rem; color:#555;">（ナマエ ガ アル シ ッ プ ス ク ラー ク カ）</small>
+                </p>
             </div>
         </div>
 
@@ -417,9 +399,7 @@
                 <input type="text" id="searchInput" class="search-input" placeholder="元素名や記号で検索（例: 酸素、H、Na）...">
             </div>
 
-            <div class="grid" id="elementGrid">
-                <!-- JSで動的に追加、または初期レンダリング -->
-            </div>
+            <div class="grid" id="elementGrid"></div>
         </div>
 
         <!-- クイズセクション -->
@@ -440,27 +420,25 @@
     </footer>
 
     <script>
-        // 元素データ（小学生〜中学生でよく出る代表的な元素）
         const elements = [
             { num: 1, symbol: 'H', name: '水素', reading: 'すいそ', trick: '「H」は英語の Hydrogen。水のもと！', tag: '空気・ガス' },
             { num: 2, symbol: 'He', name: 'ヘリウム', reading: 'へりうむ', trick: '「He」りうむ。風船を浮かせる軽いガス！', tag: '空気・ガス' },
             { num: 3, symbol: 'Li', name: 'リチウム', reading: 'りちうむ', trick: '「Li」チウム。スマホの電池に入っているよ！', tag: '金属' },
-            { num: 6, symbol: 'C', name: '炭素', reading: 'たんそ', trick: '「C」arbon（カーボン）。シャープペンの芯やダイヤモンド！', tag: '生活・身近' },
-            { num: 7, symbol: 'N', name: '窒素', reading: 'ちっそ', trick: '「N」itrogen。空気の約8割（80%）をしめている！', tag: '空気・ガス' },
-            { num: 8, symbol: 'O', name: '酸素', reading: 'さんそ', trick: '「O」xygen（オキシゲン）。息を吸うときに必要なガス！', tag: '空気・ガス' },
-            { num: 11, symbol: 'Na', name: 'ナトリウム', reading: 'なとりうむ', trick: '「Na」トリウム。食塩（塩化ナトリウム）に入っている！', tag: '生活・身近' },
-            { num: 12, symbol: 'Mg', name: 'マグネシウム', reading: 'まぐねしうむ', trick: '「Mg」。軽くて丈夫な金属！豆腐を固める「にがり」にも！', tag: '金属' },
+            { num: 6, symbol: 'C', name: '炭素', reading: 'たんそ', trick: '「C」arbon。シャープペンの芯やダイヤモンド！', tag: '生活・身近' },
+            { num: 7, symbol: 'N', name: '窒素', reading: 'ちっそ', trick: '「N」itrogen。空気の約8割をしめている！', tag: '空気・ガス' },
+            { num: 8, symbol: 'O', name: '酸素', reading: 'さんそ', trick: '「O」xygen。息を吸うときに必要なガス！', tag: '空気・ガス' },
+            { num: 11, symbol: 'Na', name: 'ナトリウム', reading: 'なとりうむ', trick: '「Na」トリウム。食塩に入っている！', tag: '生活・身近' },
+            { num: 12, symbol: 'Mg', name: 'マグネシウム', reading: 'まぐねしうむ', trick: '「Mg」。豆腐を固める「にがり」の成分！', tag: '金属' },
             { num: 13, symbol: 'Al', name: 'アルミニウム', reading: 'あるみにうむ', trick: '「Al」ミ缶や1円玉でおなじみ！', tag: '金属' },
             { num: 17, symbol: 'Cl', name: '塩素', reading: 'えんそ', trick: '「Cl」えんそ。プールの消毒のにおいのもと！', tag: '生活・身近' },
-            { num: 19, symbol: 'K', name: 'カリウム', reading: 'かりうむ', trick: '「K」アリウム。バナナや野菜にたっぷり入っている！', tag: '栄養・体' },
+            { num: 19, symbol: 'K', name: 'カリウム', reading: 'かりうむ', trick: '「K」アリウム。バナナや野菜にたっぷり！', tag: '栄養・体' },
             { num: 20, symbol: 'Ca', name: 'カルシウム', reading: 'かるしうむ', trick: '「Ca」ルシウム。骨や歯を強くする牛乳の成分！', tag: '栄養・体' },
             { num: 26, symbol: 'Fe', name: '鉄', reading: 'てつ', trick: '「Fe」つ。磁石にくっつく重い金属！', tag: '金属' },
             { num: 29, symbol: 'Cu', name: '銅', reading: 'どう', trick: '「Cu」＝キュープラム。10円玉の色！', tag: '金属' },
-            { num: 47, symbol: 'Ag', name: '銀', reading: 'ぎん', trick: '「Ag」＝アージェンタム。ピカピカのコインやアクセサリー！', tag: '金属' },
-            { num: 79, symbol: 'Au', name: '金', reading: 'きん', trick: '「Au」＝オーラム。キラキラ輝く高級な金属！', tag: '金属' }
+            { num: 47, symbol: 'Ag', name: '銀', reading: 'ぎん', trick: '「Ag」。ピカピカのコインやアクセサリー！', tag: '金属' },
+            { num: 79, symbol: 'Au', name: '金', reading: 'きん', trick: '「Au」。キラキラ輝く高級な金属！', tag: '金属' }
         ];
 
-        // カードの描画関数
         function renderCards(filterText = '') {
             const grid = document.getElementById('elementGrid');
             grid.innerHTML = '';
@@ -497,12 +475,10 @@
             });
         }
 
-        // 検索フィルターの実行
         document.getElementById('searchInput').addEventListener('input', (e) => {
             renderCards(e.target.value);
         });
 
-        // クイズ機能
         let currentQuiz = null;
 
         function generateQuiz() {
@@ -511,21 +487,18 @@
             feedback.innerHTML = '';
             nextBtn.style.display = 'none';
 
-            // ランダムに1つ正解を選ぶ
             const target = elements[Math.floor(Math.random() * elements.length)];
             currentQuiz = target;
 
-            // 質問のタイプ（名前→記号 か 記号→名前）を決定
             const isSymbolToName = Math.random() > 0.5;
-
             const questionEl = document.getElementById('quizQuestion');
+            
             if (isSymbolToName) {
                 questionEl.innerText = `元素記号「 ${target.symbol} 」の元素名は何でしょう？`;
             } else {
                 questionEl.innerText = `「 ${target.name} 」の元素記号は何でしょう？`;
             }
 
-            // 選択肢（正解1個点 + 誤り3個）
             let options = [target];
             while (options.length < 4) {
                 const randomEl = elements[Math.floor(Math.random() * elements.length)];
@@ -533,7 +506,6 @@
                     options.push(randomEl);
                 }
             }
-            // 選択肢シャッフル
             options.sort(() => Math.random() - 0.5);
 
             const optionsContainer = document.getElementById('quizOptions');
@@ -552,7 +524,6 @@
             const feedback = document.getElementById('quizFeedback');
             const buttons = document.querySelectorAll('.quiz-btn');
             
-            // 全ボタン無効化
             buttons.forEach(b => b.disabled = true);
 
             if (selected.symbol === correct.symbol) {
@@ -570,7 +541,6 @@
             generateQuiz();
         }
 
-        // 初期化実行
         renderCards();
         generateQuiz();
     </script>
