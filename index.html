@@ -3,23 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>たのしく覚える！元素記号（げんそきごう）</title>
+    <title>世界をつくる魔法のブロック！身近なモノ図鑑</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-blue: #1e3c72;
-            --bg-blue-light: #2a5298;
+            --bg-blue: #102a45;
             --card-bg: #ffffff;
             --accent-yellow: #ffde59;
             --accent-orange: #ff914d;
             --accent-pink: #ff66c4;
             --accent-green: #7ed957;
-            --accent-cyan: #00c2cb;
             --border-dark: #0a192f;
-            --border-thick: 4px solid #0a192f;
-            --text-dark: #0a192f;
             --shadow-pop: 5px 5px 0px #0a192f;
             --shadow-pop-lg: 8px 8px 0px #0a192f;
         }
@@ -34,13 +30,13 @@
         body {
             background: linear-gradient(135deg, #102a45 0%, #1e4d8c 50%, #2a65b5 100%);
             background-attachment: fixed;
-            color: var(--text-dark);
+            color: var(--border-dark);
             padding: 20px 10px 60px;
             min-height: 100vh;
         }
 
         header {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto 30px;
             text-align: center;
             background-color: var(--accent-yellow);
@@ -48,7 +44,6 @@
             border-radius: 24px;
             border: 5px solid var(--border-dark);
             box-shadow: var(--shadow-pop-lg);
-            position: relative;
         }
 
         header h1 {
@@ -57,7 +52,6 @@
             color: #0a192f;
             text-shadow: 2px 2px 0px #fff;
             margin-bottom: 8px;
-            line-height: 1.3;
         }
 
         header p {
@@ -76,7 +70,6 @@
             margin: 0 auto;
         }
 
-        /* セクションスタイル */
         .section-card {
             background-color: #f4f9ff;
             border-radius: 20px;
@@ -87,10 +80,10 @@
         }
 
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 900;
             color: #ffffff;
-            background-color: var(--bg-blue-light);
+            background-color: #2a5298;
             padding: 10px 20px;
             border-radius: 15px;
             border: 3px solid var(--border-dark);
@@ -99,31 +92,57 @@
             margin-bottom: 20px;
         }
 
-        /* 語呂合わせセクション */
-        .goro-banner {
-            background-color: #fff9db;
+        .intro-box {
+            background: #ffffff;
             border: 3px solid var(--border-dark);
             border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
+            padding: 20px;
             font-weight: 800;
-            text-align: center;
+            font-size: 1.1rem;
             line-height: 1.8;
-            box-shadow: 3px 3px 0px var(--border-dark);
+            box-shadow: var(--shadow-pop);
         }
 
-        .goro-highlight {
-            color: #e63946;
-            font-size: 1.3rem;
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 3px solid var(--border-dark);
+            padding: 10px 18px;
+            border-radius: 20px;
             font-weight: 900;
-            text-decoration: underline decoration-style wavy;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            transition: all 0.1s;
         }
 
-        /* 元素カードグリッド */
+        .filter-btn:active, .filter-btn.active {
+            background: var(--accent-yellow);
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--border-dark);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 3px solid var(--border-dark);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            outline: none;
+            margin-bottom: 20px;
+        }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
             gap: 20px;
         }
 
@@ -133,191 +152,110 @@
             border-radius: 18px;
             padding: 18px;
             box-shadow: var(--shadow-pop);
-            transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
-            overflow: hidden;
+            transition: transform 0.2s;
         }
 
         .element-card:hover {
             transform: translateY(-4px);
-            box-shadow: 7px 7px 0px var(--border-dark);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid var(--border-dark);
-            padding-bottom: 10px;
-            margin-bottom: 12px;
+            border-bottom: 3px dashed #cbd5e1;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .atomic-num {
+        .goro-badge {
+            background-color: var(--accent-pink);
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 900;
+            padding: 4px 12px;
+            border-radius: 10px;
+            border: 2px solid var(--border-dark);
+            box-shadow: 2px 2px 0px var(--border-dark);
+        }
+
+        .element-no {
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: #64748b;
+        }
+
+        .main-item-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .element-identity {
+            background: #f1f5f9;
+            padding: 6px 10px;
+            border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 800;
-            background: #e2e8f0;
-            padding: 3px 8px;
-            border-radius: 8px;
-            border: 2px solid var(--border-dark);
+            color: #475569;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1.5px solid var(--border-dark);
         }
 
-        .symbol {
-            font-size: 2.8rem;
-            font-weight: 900;
-            color: #1e3c72;
-            line-height: 1;
-            text-shadow: 1px 1px 0px #0a192f;
-        }
-
-        .name-jp {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--border-dark);
-        }
-
-        .reading {
-            font-size: 0.85rem;
-            color: #555;
-            font-weight: 800;
-        }
-
-        .trick-box {
-            background-color: #eef7ff;
-            border: 2px solid var(--border-dark);
+        .item-box {
+            background-color: #fffde7;
+            border: 2.5px solid var(--border-dark);
             border-radius: 12px;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        .trick-title {
-            font-size: 0.8rem;
-            font-weight: 900;
-            color: #00a896;
-            text-transform: uppercase;
+            padding: 12px;
+            margin-top: 8px;
         }
 
         .trick-text {
             font-size: 0.95rem;
             font-weight: 800;
-            color: #2b2d42;
-            margin-top: 2px;
+            color: #1e293b;
+            line-height: 1.5;
         }
 
         .tag {
             display: inline-block;
             margin-top: 10px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 4px 10px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            padding: 4px 12px;
             border-radius: 20px;
             border: 2px solid var(--border-dark);
             background: var(--accent-yellow);
-        }
-
-        /* クイズセクション */
-        .quiz-card {
-            background: #ffffff;
-            border: 4px solid var(--border-dark);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: var(--shadow-pop);
-        }
-
-        .quiz-question {
-            font-size: 1.5rem;
-            font-weight: 900;
-            margin-bottom: 20px;
             color: var(--border-dark);
         }
 
-        .quiz-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 500px) {
-            .quiz-options {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .quiz-btn {
-            background-color: var(--accent-cyan);
-            color: #0a192f;
+        .goro-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
             border: 3px solid var(--border-dark);
-            padding: 14px 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            border-radius: 14px;
-            cursor: pointer;
-            box-shadow: 4px 4px 0px var(--border-dark);
-            transition: all 0.1s;
-        }
-
-        .quiz-btn:active {
-            transform: translate(3px, 3px);
-            box-shadow: 1px 1px 0px var(--border-dark);
-        }
-
-        .quiz-feedback {
-            font-size: 1.3rem;
-            font-weight: 900;
-            min-height: 40px;
-            margin-top: 10px;
-        }
-
-        .next-btn {
-            background-color: var(--accent-green);
-            color: var(--border-dark);
-            border: 3px solid var(--border-dark);
-            padding: 10px 25px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px var(--border-dark);
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        /* コツ・ポイントカード */
-        .tip-list {
-            list-style: none;
-        }
-
-        .tip-item {
+            border-radius: 16px;
+            overflow: hidden;
             background: #ffffff;
-            border: 3px solid var(--border-dark);
-            border-radius: 14px;
-            padding: 15px;
-            margin-bottom: 12px;
-            box-shadow: 3px 3px 0px var(--border-dark);
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
-        .tip-badge {
-            background: var(--accent-pink);
-            color: white;
-            font-weight: 900;
-            border: 2px solid var(--border-dark);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 1.2rem;
-        }
-
-        .tip-text {
+        .goro-table th, .goro-table td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 2px solid var(--border-dark);
+            border-right: 2px solid var(--border-dark);
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .goro-table th {
+            background-color: var(--accent-yellow);
+            text-align: center;
         }
 
         footer {
@@ -325,133 +263,111 @@
             color: #ffffff;
             font-weight: 800;
             margin-top: 40px;
-            text-shadow: 2px 2px 0px var(--border-dark);
-        }
-
-        .filter-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .search-input {
-            flex: 1;
-            min-width: 200px;
-            padding: 12px 16px;
-            border: 3px solid var(--border-dark);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 800;
-            box-shadow: 3px 3px 0px var(--border-dark);
-            outline: none;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🧪 たのしく覚える！元素記号 🧪</h1>
-        <p>小学校・中学校の理科で大活躍！</p>
+        <h1>✨ 世界をつくる魔法のブロック図鑑 ✨</h1>
+        <p>「これって何からできてるの？」がすぐわかる！</p>
     </header>
 
     <div class="container">
 
-        <!-- 覚えるコツセクション -->
         <div class="section-card">
-            <h2 class="section-title">💡 元素記号を覚える3つのコツ</h2>
-            <div class="tip-list">
-                <div class="tip-item">
-                    <div class="tip-badge">1</div>
-                    <div class="tip-text"><strong>1文字目は絶対に「大文字」、2文字目は「小文字」！</strong><br>例：Na（× NA, × na）</div>
-                </div>
-                <div class="tip-item">
-                    <div class="tip-badge" style="background: var(--accent-cyan);">2</div>
-                    <div class="tip-text"><strong>英語名・ラテン語名の頭文字から来ているよ！</strong><br>Hydrogen（水素）→ <strong>H</strong>、Oxygen（酸素）→ <strong>O</strong></div>
-                </div>
-                <div class="tip-item">
-                    <div class="tip-badge" style="background: var(--accent-green);">3</div>
-                    <div class="tip-text"><strong>「リズム」や「語呂合わせ」で口に出して覚えよう！</strong><br>「水兵リーベ…」の呪文で一気にマスター！</div>
-                </div>
+            <h2 class="section-title">🧱 「元素（げんそ）」ってなに？</h2>
+            <div class="intro-box">
+                私たちのまわりにある「水」「空気」「スマホ」「食べ物」は、すべて小さな<b>「世界をつくるブロック（元素）」</b>が組み合わさってできています！<br>
+                昔から覚えるときに使われている魔法の呪文<b>「スイヘーリーベ…」</b>に合わせて、どんな場所で使われているか探してみよう！
             </div>
         </div>
 
-        <!-- 語呂合わせセクション（ご指定通り更新済み） -->
         <div class="section-card">
-            <h2 class="section-title">🎵 魔法の呪文「水兵リーベ僕の船」</h2>
-            <div class="goro-banner">
-                <p style="margin-bottom: 12px;">
-                    <span class="goro-highlight">水(H) 兵(He)</span> <span class="goro-highlight">リー(Li) ベ(Be)</span> <span class="goro-highlight">ボ(B) ク(C)</span> の <span class="goro-highlight">船(N,O,F,Ne)</span><br>
-                    <small style="font-size:0.85rem; color:#555;">（スイヘイ リーベ ボクノフネ）</small>
-                </p>
-                <p>
-                    <span class="goro-highlight">ナ(Na) マ(Mg) エ(Al) ガ(Si)</span> <span class="goro-highlight">ア(P) ル(S) シ(Cl)</span> <span class="goro-highlight">ッ(Ar) プ(K) ス(Ca)</span><br>
-                    <small style="font-size:0.85rem; color:#555;">（ナマエ ガ アル シ ッ プ ス ク ラー ク カ）</small>
-                </p>
-            </div>
-        </div>
+            <h2 class="section-title">🔍 身近なモノから探してみよう</h2>
+            
+            <input type="text" id="searchInput" class="search-input" placeholder="例：水、風船、スマホ、バナナ、塩 などで検索...">
 
-        <!-- 元素カード一覧 -->
-        <div class="section-card">
-            <h2 class="section-title">🔍 身近な元素図鑑（ずかん）</h2>
-
-            <div class="filter-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="元素名や記号で検索（例: 酸素、H、Na）...">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCategory(event, 'all')">すべて表示</button>
+                <button class="filter-btn" onclick="filterCategory(event, '空気・ガス')">🎈 ふうせん・空気</button>
+                <button class="filter-btn" onclick="filterCategory(event, '身近なモノ')">📱 身近なモノ・道具</button>
+                <button class="filter-btn" onclick="filterCategory(event, 'カラダ・医療')">🥛 たべもの・カラダ</button>
+                <button class="filter-btn" onclick="filterCategory(event, '金属・ハイテク')">🪙 めずらしい金属</button>
             </div>
 
             <div class="grid" id="elementGrid"></div>
         </div>
 
-        <!-- クイズセクション -->
         <div class="section-card">
-            <h2 class="section-title">🎮 元素記号クイズにチャレンジ！</h2>
-            <div class="quiz-card">
-                <div class="quiz-question" id="quizQuestion">問題読み込み中...</div>
-                <div class="quiz-options" id="quizOptions"></div>
-                <div class="quiz-feedback" id="quizFeedback"></div>
-                <button class="next-btn" id="nextBtn" style="display:none;" onclick="loadNextQuestion()">次の問題へ ➔</button>
+            <h2 class="section-title">📜 呪文とブロックの対応表（1番〜20番）</h2>
+            <div style="overflow-x:auto;">
+                <table class="goro-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">呪文の音</th>
+                            <th style="width: 35%;">身近にあるモノ</th>
+                            <th style="width: 25%;">ブロックの名前</th>
+                            <th style="width: 25%;">世界共通の記号</th>
+                        </tr>
+                    </thead>
+                    <tbody id="goroTableBody"></tbody>
+                </table>
             </div>
         </div>
 
     </div>
 
     <footer>
-        <p>単一HTMLファイルで作る 理科学習Webページ | GitHub Pagesで公開可能！</p>
+        <p>スイヘーリーベ僕の船... | はじめての身近なブロック（元素）図鑑</p>
     </footer>
 
     <script>
         const elements = [
-            { num: 1, symbol: 'H', name: '水素', reading: 'すいそ', trick: '「H」は英語の Hydrogen。水のもと！', tag: '空気・ガス' },
-            { num: 2, symbol: 'He', name: 'ヘリウム', reading: 'へりうむ', trick: '「He」りうむ。風船を浮かせる軽いガス！', tag: '空気・ガス' },
-            { num: 3, symbol: 'Li', name: 'リチウム', reading: 'りちうむ', trick: '「Li」チウム。スマホの電池に入っているよ！', tag: '金属' },
-            { num: 6, symbol: 'C', name: '炭素', reading: 'たんそ', trick: '「C」arbon。シャープペンの芯やダイヤモンド！', tag: '生活・身近' },
-            { num: 7, symbol: 'N', name: '窒素', reading: 'ちっそ', trick: '「N」itrogen。空気の約8割をしめている！', tag: '空気・ガス' },
-            { num: 8, symbol: 'O', name: '酸素', reading: 'さんそ', trick: '「O」xygen。息を吸うときに必要なガス！', tag: '空気・ガス' },
-            { num: 11, symbol: 'Na', name: 'ナトリウム', reading: 'なとりうむ', trick: '「Na」トリウム。食塩に入っている！', tag: '生活・身近' },
-            { num: 12, symbol: 'Mg', name: 'マグネシウム', reading: 'まぐねしうむ', trick: '「Mg」。豆腐を固める「にがり」の成分！', tag: '金属' },
-            { num: 13, symbol: 'Al', name: 'アルミニウム', reading: 'あるみにうむ', trick: '「Al」ミ缶や1円玉でおなじみ！', tag: '金属' },
-            { num: 17, symbol: 'Cl', name: '塩素', reading: 'えんそ', trick: '「Cl」えんそ。プールの消毒のにおいのもと！', tag: '生活・身近' },
-            { num: 19, symbol: 'K', name: 'カリウム', reading: 'かりうむ', trick: '「K」アリウム。バナナや野菜にたっぷり！', tag: '栄養・体' },
-            { num: 20, symbol: 'Ca', name: 'カルシウム', reading: 'かるしうむ', trick: '「Ca」ルシウム。骨や歯を強くする牛乳の成分！', tag: '栄養・体' },
-            { num: 26, symbol: 'Fe', name: '鉄', reading: 'てつ', trick: '「Fe」つ。磁石にくっつく重い金属！', tag: '金属' },
-            { num: 29, symbol: 'Cu', name: '銅', reading: 'どう', trick: '「Cu」＝キュープラム。10円玉の色！', tag: '金属' },
-            { num: 47, symbol: 'Ag', name: '銀', reading: 'ぎん', trick: '「Ag」。ピカピカのコインやアクセサリー！', tag: '金属' },
-            { num: 79, symbol: 'Au', name: '金', reading: 'きん', trick: '「Au」。キラキラ輝く高級な金属！', tag: '金属' }
+            { num: 1, goro: 'スイ', symbol: 'H', name: '水素（すいそ）', item: '水 💧', trick: '酸素とくっつくと私たちが毎日飲む「水」になる一番軽いブロック！', cat: '空気・ガス' },
+            { num: 2, goro: 'ヘー', symbol: 'He', name: 'ヘリウム', item: 'ぷかぷか浮かぶ風船 🎈', trick: 'ふわふわ浮かぶ風船に入っているよ！吸うと声が高くなる不思議なガス。', cat: '空気・ガス' },
+            { num: 3, goro: 'リー', symbol: 'Li', name: 'リチウム', item: 'スマホやゲーム機の電池 🔋', trick: '何回も繰り返し充電できるバッテリーの主役！', cat: '身近なモノ' },
+            { num: 4, goro: 'ベ', symbol: 'Be', name: 'ベリリウム', item: 'エメラルド（宝石） 💎', trick: 'きれいな緑色の宝石「エメラルド」の中に入っているよ！', cat: '身近なモノ' },
+            { num: 5, goro: 'ボ', symbol: 'B', name: 'ホウ素（ほうそ）', item: '割れにくい強いガラス 🥛', trick: '理科実験のビーカーや、頑丈なガラスを作る材料！', cat: '身近なモノ' },
+            { num: 6, goro: 'ク', symbol: 'C', name: '炭素（たんそ）', item: 'シャーペンの芯 ✏️・ダイヤモンド 💎', trick: '真っ黒な鉛筆の芯も、ピカピカ輝くダイヤも、実は同じブロック！', cat: '身近なモノ' },
+            { num: 7, goro: 'ノ', symbol: 'ノ', symbol: 'N', name: '窒素（ちっそ）', item: 'ポテチの袋の中身 🥔', trick: 'ポテチの袋がパンパンなのはこれ！食べ物が悪くならないよう守っているよ。', cat: '空気・ガス' },
+            { num: 8, goro: 'オ', symbol: 'O', name: '酸素（さんそ）', item: '吸い込む空気 🫁', trick: '人間や動物が息をして生きていくために絶対に欠かせない！', cat: '空気・ガス' },
+            { num: 9, goro: 'フ', symbol: 'F', name: 'フッ素（ふっそ）', item: '虫歯予防の歯みがき粉 🪥', trick: '歯の表面をガードして、虫歯から守ってくれる強い味方！', cat: '身近なモノ' },
+            { num: 10, goro: 'ネ', symbol: 'Ne', name: 'ネオン', item: 'ピカピカ光るお店の看板 💡', trick: '電気を通すとキレイなオレンジ色に光る不思議なガス！', cat: '空気・ガス' },
+            { num: 11, goro: 'ナ', symbol: 'Na', name: 'ナトリウム', item: '食塩（お塩） 🧂', trick: '料理に欠かせない「お塩」の半分はこれでできている！', cat: 'カラダ・医療' },
+            { num: 12, goro: 'マ', symbol: 'Mg', name: 'マグネシウム', item: 'お豆腐（にがり） 🧊', trick: '豆乳をお豆腐に変える「にがり」の主成分！', cat: 'カラダ・医療' },
+            { num: 13, goro: 'エ', symbol: 'Al', name: 'アルミニウム', item: '1円玉 🪙・アルミホイル 🌯', trick: 'とっても軽くて手で曲げられるくらい柔らかい金属！', cat: '金属・ハイテク' },
+            { num: 14, goro: 'ガ', symbol: 'Si', name: 'ケイ素（けいそ）', item: '砂浜の砂 🏖️・スマホの頭脳', trick: 'ガラスの材料や、スマホの中にある頭脳パーツに使われているよ！', cat: '身近なモノ' },
+            { num: 15, goro: 'アル', symbol: 'P', name: 'リン', item: 'マッチの火をつける部分 💥', trick: 'こすると火がつく魔法の成分！実はみんなの「骨」にも入っているよ。', cat: '身近なモノ' },
+            { num: 16, goro: 'シップ', symbol: 'S', name: '硫黄（いおう）', item: '温泉のにおい ♨️', trick: '温泉街に行くと香る、あの独特な卵のようなにおいの正体！', cat: '身近なモノ' },
+            { num: 17, goro: 'ス', symbol: 'Cl', name: '塩素（えんそ）', item: 'プールの消毒液 🏊', trick: 'プールをきれいに保つためにバイキンをやっつけてくれる！', cat: '身近なモノ' },
+            { num: 18, goro: 'クラー', symbol: 'Ar', name: 'アルゴン', item: '電球のなかみ 💡', trick: '電球の中に入っていて、中の線が焼き切れるのを防いでいるよ！', cat: '空気・ガス' },
+            { num: 19, goro: 'ク', symbol: 'K', name: 'カリウム', item: 'バナナ 🍌', trick: 'バナナにたくさん入っていて、足がつるのを防いでくれるよ！', cat: 'カラダ・医療' },
+            { num: 20, goro: 'カ', symbol: 'Ca', name: 'カルシウム', item: '牛乳 🥛・強い骨 🦴', trick: '牛乳や小魚にたくさん入っていて、骨や歯をカチカチに強くする！', cat: 'カラダ・医療' }
         ];
 
-        function renderCards(filterText = '') {
+        // 修正：7番の定義にあった重複プロパティを修正して綺麗に保持
+        elements[6] = { num: 7, goro: 'ノ', symbol: 'N', name: '窒素（ちっそ）', item: 'ポテチの袋の中身 🥔', trick: 'ポテチの袋がパンパンなのはこれ！食べ物が悪くならないよう守っているよ。', cat: '空気・ガス' };
+
+        let currentCategory = 'all';
+
+        function renderCards() {
             const grid = document.getElementById('elementGrid');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
             grid.innerHTML = '';
 
             const filtered = elements.filter(el => {
-                const q = filterText.toLowerCase();
-                return el.name.includes(q) || 
-                       el.symbol.toLowerCase().includes(q) || 
-                       el.reading.includes(q);
+                const matchesCategory = (currentCategory === 'all' || el.cat === currentCategory);
+                const matchesSearch = el.name.toLowerCase().includes(searchVal) || 
+                                      el.goro.toLowerCase().includes(searchVal) || 
+                                      el.symbol.toLowerCase().includes(searchVal) || 
+                                      el.item.toLowerCase().includes(searchVal) ||
+                                      el.trick.toLowerCase().includes(searchVal);
+                return matchesCategory && matchesSearch;
             });
 
-            if (filtered.length === 0) {
-                grid.innerHTML = '<p style="font-weight:800; color:#666; text-align:center; grid-column: 1/-1;">該当する元素が見つかりませんでした 🔍</p>';
+            if(filtered.length === 0) {
+                grid.innerHTML = '<p style="font-weight:800; color:#fff; text-align:center; grid-column: 1/-1; padding: 30px;">見つかりませんでした 🔍<br>（例：水、風船、スマホ、塩 などで探してみてね）</p>';
                 return;
             }
 
@@ -460,89 +376,50 @@
                 card.className = 'element-card';
                 card.innerHTML = `
                     <div class="card-header">
-                        <span class="atomic-num">原子番号 ${el.num}</span>
-                        <span class="symbol">${el.symbol}</span>
+                        <div class="goro-badge">呪文: 「${el.goro}」</div>
+                        <span class="element-no">No. ${el.num}</span>
                     </div>
-                    <div class="name-jp">${el.name}</div>
-                    <div class="reading">${el.reading}</div>
-                    <div class="trick-box">
-                        <div class="trick-title">💡 覚え方のコツ</div>
-                        <div class="trick-text">${el.trick}</div>
+                    <div class="main-item-title">${el.item}</div>
+                    <div class="element-identity">
+                        <span>ブロック名: <b>${el.name}</b></span>
+                        <span>記号: <b>${el.symbol}</b></span>
                     </div>
-                    <span class="tag">${el.tag}</span>
+                    <div class="item-box">
+                        <div class="trick-text">💡 ${el.trick}</div>
+                    </div>
+                    <span class="tag">${el.cat}</span>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            renderCards(e.target.value);
-        });
-
-        let currentQuiz = null;
-
-        function generateQuiz() {
-            const feedback = document.getElementById('quizFeedback');
-            const nextBtn = document.getElementById('nextBtn');
-            feedback.innerHTML = '';
-            nextBtn.style.display = 'none';
-
-            const target = elements[Math.floor(Math.random() * elements.length)];
-            currentQuiz = target;
-
-            const isSymbolToName = Math.random() > 0.5;
-            const questionEl = document.getElementById('quizQuestion');
-            
-            if (isSymbolToName) {
-                questionEl.innerText = `元素記号「 ${target.symbol} 」の元素名は何でしょう？`;
-            } else {
-                questionEl.innerText = `「 ${target.name} 」の元素記号は何でしょう？`;
-            }
-
-            let options = [target];
-            while (options.length < 4) {
-                const randomEl = elements[Math.floor(Math.random() * elements.length)];
-                if (!options.some(o => o.symbol === randomEl.symbol)) {
-                    options.push(randomEl);
-                }
-            }
-            options.sort(() => Math.random() - 0.5);
-
-            const optionsContainer = document.getElementById('quizOptions');
-            optionsContainer.innerHTML = '';
-
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'quiz-btn';
-                btn.innerText = isSymbolToName ? opt.name : opt.symbol;
-                btn.onclick = () => checkAnswer(opt, target, btn);
-                optionsContainer.appendChild(btn);
+        function renderTable() {
+            const tbody = document.getElementById('goroTableBody');
+            tbody.innerHTML = '';
+            elements.forEach(el => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="text-align:center; font-weight:900; color:#e11d48; background:#fff1f2; font-size:1.1rem;">${el.goro}</td>
+                    <td style="font-weight:900; color:#1e293b; font-size:1.1rem;">${el.item}</td>
+                    <td style="font-weight:800;">${el.name}</td>
+                    <td style="text-align:center; font-weight:900; color:#475569; background:#f8fafc;">${el.symbol}</td>
+                `;
+                tbody.appendChild(tr);
             });
         }
 
-        function checkAnswer(selected, correct, btnElement) {
-            const feedback = document.getElementById('quizFeedback');
-            const buttons = document.querySelectorAll('.quiz-btn');
-            
-            buttons.forEach(b => b.disabled = true);
-
-            if (selected.symbol === correct.symbol) {
-                feedback.innerHTML = '<span style="color:#2a9d8f;">🎉 大正解！すごいぞ！</span>';
-                btnElement.style.backgroundColor = '#7ed957';
-            } else {
-                feedback.innerHTML = `<span style="color:#e63946;">❌ 残念！ 正解は「 ${correct.name}（${correct.symbol}） 」でした！</span>`;
-                btnElement.style.backgroundColor = '#ff6666';
-            }
-
-            document.getElementById('nextBtn').style.display = 'inline-block';
+        function filterCategory(evt, cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            evt.target.classList.add('active');
+            renderCards();
         }
 
-        function loadNextQuestion() {
-            generateQuiz();
-        }
-
-        renderCards();
-        generateQuiz();
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('searchInput').addEventListener('input', renderCards);
+            renderCards();
+            renderTable();
+        });
     </script>
 </body>
 </html>
