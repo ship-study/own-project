@@ -187,28 +187,29 @@
         }
 
         .main-item-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 900;
             color: #0f172a;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .element-identity {
-            background: #f1f5f9;
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 800;
-            color: #475569;
+            background: #fff9db;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: #1e293b;
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1.5px solid var(--border-dark);
+            border: 2px solid var(--border-dark);
+            box-shadow: 2px 2px 0px var(--border-dark);
         }
 
         .item-box {
-            background-color: #fffde7;
+            background-color: #f8fafc;
             border: 2.5px solid var(--border-dark);
             border-radius: 12px;
             padding: 12px;
@@ -263,6 +264,11 @@
             color: #ffffff;
             font-weight: 800;
             margin-top: 40px;
+        }
+
+        footer a {
+            color: var(--accent-yellow);
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -320,6 +326,7 @@
 
     <footer>
         <p>スイヘーリーベ僕の船... | はじめての身近なブロック（元素）図鑑</p>
+        <p style="margin-top: 8px;"><a href="https://ship-study.github.io/own-project/index2.html" target="_blank">https://ship-study.github.io/own-project/index2.html</a></p>
     </footer>
 
     <script>
@@ -330,7 +337,7 @@
             { num: 4, goro: 'ベ', symbol: 'Be', name: 'ベリリウム', item: 'エメラルド（宝石） 💎', trick: 'きれいな緑色の宝石「エメラルド」の中に入っているよ！', cat: '身近なモノ' },
             { num: 5, goro: 'ボ', symbol: 'B', name: 'ホウ素（ほうそ）', item: '割れにくい強いガラス 🥛', trick: '理科実験のビーカーや、頑丈なガラスを作る材料！', cat: '身近なモノ' },
             { num: 6, goro: 'ク', symbol: 'C', name: '炭素（たんそ）', item: 'シャーペンの芯 ✏️・ダイヤモンド 💎', trick: '真っ黒な鉛筆の芯も、ピカピカ輝くダイヤも、実は同じブロック！', cat: '身近なモノ' },
-            { num: 7, goro: 'ノ', symbol: 'ノ', symbol: 'N', name: '窒素（ちっそ）', item: 'ポテチの袋の中身 🥔', trick: 'ポテチの袋がパンパンなのはこれ！食べ物が悪くならないよう守っているよ。', cat: '空気・ガス' },
+            { num: 7, goro: 'ノ', symbol: 'N', name: '窒素（ちっそ）', item: 'ポテチの袋の中身 🥔', trick: 'ポテチの袋がパンパンなのはこれ！食べ物が悪くならないよう守っているよ。', cat: '空気・ガス' },
             { num: 8, goro: 'オ', symbol: 'O', name: '酸素（さんそ）', item: '吸い込む空気 🫁', trick: '人間や動物が息をして生きていくために絶対に欠かせない！', cat: '空気・ガス' },
             { num: 9, goro: 'フ', symbol: 'F', name: 'フッ素（ふっそ）', item: '虫歯予防の歯みがき粉 🪥', trick: '歯の表面をガードして、虫歯から守ってくれる強い味方！', cat: '身近なモノ' },
             { num: 10, goro: 'ネ', symbol: 'Ne', name: 'ネオン', item: 'ピカピカ光るお店の看板 💡', trick: '電気を通すとキレイなオレンジ色に光る不思議なガス！', cat: '空気・ガス' },
@@ -345,9 +352,6 @@
             { num: 19, goro: 'ク', symbol: 'K', name: 'カリウム', item: 'バナナ 🍌', trick: 'バナナにたくさん入っていて、足がつるのを防いでくれるよ！', cat: 'カラダ・医療' },
             { num: 20, goro: 'カ', symbol: 'Ca', name: 'カルシウム', item: '牛乳 🥛・強い骨 🦴', trick: '牛乳や小魚にたくさん入っていて、骨や歯をカチカチに強くする！', cat: 'カラダ・医療' }
         ];
-
-        // 修正：7番の定義にあった重複プロパティを修正して綺麗に保持
-        elements[6] = { num: 7, goro: 'ノ', symbol: 'N', name: '窒素（ちっそ）', item: 'ポテチの袋の中身 🥔', trick: 'ポテチの袋がパンパンなのはこれ！食べ物が悪くならないよう守っているよ。', cat: '空気・ガス' };
 
         let currentCategory = 'all';
 
@@ -381,7 +385,7 @@
                     </div>
                     <div class="main-item-title">${el.item}</div>
                     <div class="element-identity">
-                        <span>ブロック名: <b>${el.name}</b></span>
+                        <span>ブロック: <b>${el.name}</b></span>
                         <span>記号: <b>${el.symbol}</b></span>
                     </div>
                     <div class="item-box">
