@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>超入門！身近な元素図鑑（1番〜79番 完全網羅版）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-blue: #102a45;
+            --card-bg: #ffffff;
+            --accent-yellow: #ffde59;
+            --accent-orange: #ff914d;
+            --accent-pink: #ff66c4;
+            --accent-green: #7ed957;
+            --accent-cyan: #00c2cb;
+            --border-dark: #0a192f;
+            --shadow-pop: 5px 5px 0px #0a192f;
+            --shadow-pop-lg: 8px 8px 0px #0a192f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #102a45 0%, #1e4d8c 50%, #2a65b5 100%);
+            background-attachment: fixed;
+            color: var(--border-dark);
+            padding: 20px 10px 60px;
+            min-height: 100vh;
+        }
+
+        header {
+            max-width: 950px;
+            margin: 0 auto 30px;
+            text-align: center;
+            background-color: var(--accent-yellow);
+            padding: 25px 15px;
+            border-radius: 24px;
+            border: 5px solid var(--border-dark);
+            box-shadow: var(--shadow-pop-lg);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #0a192f;
+            text-shadow: 2px 2px 0px #fff;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1e3c72;
+            background: #ffffff;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+            border: 3px solid var(--border-dark);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .section-card {
+            background-color: #f4f9ff;
+            border-radius: 20px;
+            border: 4px solid var(--border-dark);
+            box-shadow: var(--shadow-pop-lg);
+            padding: 25px;
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #ffffff;
+            background-color: #2a5298;
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: 3px solid var(--border-dark);
+            box-shadow: 4px 4px 0px var(--border-dark);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .intro-box {
+            background: #ffffff;
+            border: 3px solid var(--border-dark);
+            border-radius: 16px;
+            padding: 20px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            box-shadow: var(--shadow-pop);
+        }
+
+        .intro-highlight {
+            background: linear-gradient(transparent 60%, var(--accent-yellow) 60%);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 3px solid var(--border-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            transition: all 0.1s;
+        }
+
+        .filter-btn:active, .filter-btn.active {
+            background: var(--accent-yellow);
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--border-dark);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 3px solid var(--border-dark);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 800;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .element-card {
+            background: white;
+            border: 4px solid var(--border-dark);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: var(--shadow-pop);
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .element-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--border-dark);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        .atomic-num {
+            font-size: 0.9rem;
+            font-weight: 900;
+            background: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 2px solid var(--border-dark);
+        }
+
+        /* 元素記号をハッキリ大きく強調 */
+        .symbol {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #1e3c72;
+            line-height: 1;
+            background: #fffde7;
+            padding: 2px 12px;
+            border-radius: 10px;
+            border: 2px solid var(--border-dark);
+        }
+
+        .name-jp {
+            font-size: 1.4rem;
+            font-weight: 900;
+        }
+
+        .reading {
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: 800;
+        }
+
+        .item-box {
+            background-color: #fff9db;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .item-title {
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: #d97706;
+        }
+
+        .item-text {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #2b2d42;
+        }
+
+        .trick-box {
+            background-color: #eef7ff;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 8px;
+        }
+
+        .trick-title {
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: #00a896;
+        }
+
+        .trick-text {
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 2px solid var(--border-dark);
+            background: var(--accent-cyan);
+            color: white;
+        }
+
+        .goro-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 3px solid var(--border-dark);
+            border-radius: 16px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .goro-table th, .goro-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-dark);
+            border-right: 2px solid var(--border-dark);
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .goro-table th {
+            background-color: var(--accent-yellow);
+        }
+
+        footer {
+            text-align: center;
+            color: #ffffff;
+            font-weight: 800;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🧪 超入門！身近な元素図鑑 🧪</h1>
+        <p>1番（水素）から 79番（金）まで 全79元素を完全網羅！</p>
+    </header>
+
+    <div class="container">
+
+        <div class="section-card">
+            <h2 class="section-title">🧱 そもそも「元素（げんそ）」ってなに？</h2>
+            <div class="intro-box">
+                元素とは、この世界に存在するあらゆる物をつくっている<span class="intro-highlight">「基本のレゴブロック」</span>です！<br>
+                身の回りの金属、ガス、食べ物、病院の検査薬まで、すべて元素ブロックでできています。
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title">🔍 全79元素カード（1番〜79番）</h2>
+            
+            <input type="text" id="searchInput" class="search-input" placeholder="元素名、記号、身近な製品名で検索（例: 鉄、Titanium、Au、LED）...">
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCategory(event, 'all')">すべて表示</button>
+                <button class="filter-btn" onclick="filterCategory(event, '空気・ガス')">🎈 空気・ガス</button>
+                <button class="filter-btn" onclick="filterCategory(event, '身近なモノ')">📱 身近なモノ</button>
+                <button class="filter-btn" onclick="filterCategory(event, 'カラダ・医療')">🥛 カラダ・医療</button>
+                <button class="filter-btn" onclick="filterCategory(event, '金属・ハイテク')">🪙 金属・ハイテク</button>
+            </div>
+
+            <div class="grid" id="elementGrid"></div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title">📜 全元素リスト（1番〜79番）</h2>
+            <div style="overflow-x:auto;">
+                <table class="goro-table">
+                    <thead>
+                        <tr>
+                            <th>番号</th>
+                            <th>記号</th>
+                            <th>元素名</th>
+                            <th>よみがな</th>
+                            <th>身近な用途・特徴</th>
+                        </tr>
+                    </thead>
+                    <tbody id="goroTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>1番から79番まで完全網羅 | 身近な元素図鑑Webページ</p>
+    </footer>
+
+    <script>
+        const elements = [
+            { num: 1, symbol: 'H', name: '水素', reading: 'すいそ', item: '水・宇宙のガス', trick: '宇宙で1番多いガス！', cat: '空気・ガス' },
+            { num: 2, symbol: 'He', name: 'ヘリウム', reading: 'へりうむ', item: '浮かぶ風船・声変化ガス', trick: '吸うと声が高くなる軽いガス！', cat: '空気・ガス' },
+            { num: 3, symbol: 'Li', name: 'リチウム', reading: 'りちうむ', item: 'スマホの充電池', trick: '充電できるバッテリーの主役！', cat: '身近なモノ' },
+            { num: 4, symbol: 'Be', name: 'ベリリウム', reading: 'べりりうむ', item: 'エメラルド（宝石）', trick: '美しい緑色の宝石に含まれる！', cat: '身近なモノ' },
+            { num: 5, symbol: 'B', name: 'ホウ素', reading: 'ほうそ', item: 'ホウ酸団子・ガラス', trick: 'ゴキブリ退治や強化ガラスに使う！', cat: '身近なモノ' },
+            { num: 6, symbol: 'C', name: '炭素', reading: 'たんそ', item: 'シャープ芯・ダイヤ', trick: '鉛筆の芯もダイヤも同じ炭素！', cat: '身近なモノ' },
+            { num: 7, symbol: 'N', name: '窒素', reading: 'ちっそ', item: 'ポテチの袋の空気', trick: '空気の約8割をしめている！', cat: '空気・ガス' },
+            { num: 8, symbol: 'O', name: '酸素', reading: 'さんそ', item: '呼吸・空気', trick: '生き物が生きるのに必要なガス！', cat: '空気・ガス' },
+            { num: 9, symbol: 'F', name: 'フッ素', reading: 'ふっそ', item: '虫歯予防の歯磨き粉', trick: '歯を強くコーティング！', cat: '身近なモノ' },
+            { num: 10, symbol: 'Ne', name: 'ネオン', reading: 'ねおん', item: '街の光る看板', trick: '電気を通すと鮮やかに光る！', cat: '空気・ガス' },
+            { num: 11, symbol: 'Na', name: 'ナトリウム', reading: 'なとりうむ', item: '食塩（塩）', trick: '塩素とくっついて食塩になる！', cat: 'カラダ・医療' },
+            { num: 12, symbol: 'Mg', name: 'マグネシウム', reading: 'まぐねしうむ', item: '豆腐のにがり・軽合金', trick: '体に大事なミネラル！', cat: 'カラダ・医療' },
+            { num: 13, symbol: 'Al', name: 'アルミニウム', reading: 'あるみにうむ', item: '1円玉・アルミホイル', trick: '軽くて使いやすい金属！', cat: '金属・ハイテク' },
+            { num: 14, symbol: 'Si', name: 'ケイ素', reading: 'けいそ', item: 'ガラス・ICチップ', trick: '砂の主成分！スマホの頭脳になる！', cat: '身近なモノ' },
+            { num: 15, symbol: 'P', name: 'リン', reading: 'りん', item: 'マッチの頭・骨', trick: 'マッチを擦ると火がつく成分！', cat: '身近なモノ' },
+            { num: 16, symbol: 'S', name: '硫黄', reading: 'いおう', item: '温泉のにおい・入浴剤', trick: '温泉の独特なにおいの元！', cat: '身近なモノ' },
+            { num: 17, symbol: 'Cl', name: '塩素', reading: 'えんそ', item: 'プールの消毒液', trick: 'バイキンをやっつける消毒成分！', cat: '身近なモノ' },
+            { num: 18, symbol: 'Ar', name: 'アルゴン', reading: 'あるごん', item: '電球の中の空気', trick: '電球の中身を守るガス！', cat: '空気・ガス' },
+            { num: 19, symbol: 'K', name: 'カリウム', reading: 'かりうむ', item: 'バナナ・野菜', trick: '元気に過ごす必須栄養素！', cat: 'カラダ・医療' },
+            { num: 20, symbol: 'Ca', name: 'カルシウム', reading: 'かるしうむ', item: '牛乳・骨・歯', trick: '骨や歯を丈夫にする！', cat: 'カラダ・医療' },
+            { num: 21, symbol: 'Sc', name: 'スカンジウム', reading: 'すかんじうむ', item: '野球のバット・照明', trick: 'アルミに混ぜて強度をアップ！', cat: '金属・ハイテク' },
+            { num: 22, symbol: 'Ti', name: 'チタン', reading: 'ちたん', item: 'メガネフレーム・インプラント', trick: '軽くて丈夫で錆びない金属！', cat: '金属・ハイテク' },
+            { num: 23, symbol: 'V', name: 'バナジウム', reading: 'ばなじうむ', item: '天然水・工具（スパナ）', trick: 'ミネラルウォーターでおなじみ！', cat: 'カラダ・医療' },
+            { num: 24, symbol: 'Cr', name: 'クロム', reading: 'くろむ', item: '水道の蛇口（ピカピカのメッキ）', trick: '金属をピカピカにして錆から守る！', cat: '金属・ハイテク' },
+            { num: 25, symbol: 'Mn', name: 'マンガン', reading: 'まんがん', item: '乾電池（マンガン電池）', trick: '身近な電池の材料！', cat: '身近なモノ' },
+            { num: 26, symbol: 'Fe', name: '鉄', reading: 'てつ', item: 'フライパン・線路・血液', trick: '磁石につく！血の赤さの元！', cat: '金属・ハイテク' },
+            { num: 27, symbol: 'Co', name: 'コバルト', reading: 'こばると', item: '青いガラス・超強力磁石', trick: '美しい青色の着色に使われる！', cat: '金属・ハイテク' },
+            { num: 28, symbol: 'Ni', name: 'ニッケル', reading: 'にっける', item: '50円玉・100円玉', trick: '硬貨やステンレスに使われる！', cat: '金属・ハイテク' },
+            { num: 29, symbol: 'Cu', name: '銅', reading: 'どう', item: '10円玉・電線', trick: '電気をすごくよく通す！', cat: '金属・ハイテク' },
+            { num: 30, symbol: 'Zn', name: '亜鉛', reading: 'あえん', item: 'トタン屋根・サプリメント', trick: '味覚を正常に保つ栄養素！', cat: 'カラダ・医療' },
+            { num: 31, symbol: 'Ga', name: 'ガリウム', reading: 'がりうむ', item: 'LED照明・青色レーザー', trick: '体温（30℃）で溶けてしまう金属！', cat: '金属・ハイテク' },
+            { num: 32, symbol: 'Ge', name: 'ゲルマニウム', reading: 'げるまにうむ', item: '光ファイバー・半導体', trick: '通信用ファイバーに欠かせない！', cat: '金属・ハイテク' },
+            { num: 33, symbol: 'As', name: 'ヒ素', reading: 'ひそ', item: '昔の毒薬（現在は半導体）', trick: '毒として有名だが技術にも使われる！', cat: '身近なモノ' },
+            { num: 34, symbol: 'Se', name: 'セレン', reading: 'せれん', item: 'コピー機・シャンプー', trick: '光が当たると電気を通す！', cat: '身近なモノ' },
+            { num: 35, symbol: 'Br', name: '臭素', reading: 'しゅうそ', item: '燃えにくい服（難燃剤）', trick: '常温で液体の珍しい非金属！', cat: '身近なモノ' },
+            { num: 36, symbol: 'Kr', name: 'クリプトン', reading: 'くりぷとん', item: '高級白熱電球・複層ガラス', trick: '熱を伝えにくい高級ガス！', cat: '空気・ガス' },
+            { num: 37, symbol: 'Rb', name: 'ルビジウム', reading: 'るびじうむ', item: '原子時計（正確な時計）', trick: '超正確な時計の基準に使われる！', cat: '金属・ハイテク' },
+            { num: 38, symbol: 'Sr', name: 'ストロンチウム', reading: 'すとろんちうむ', item: '花火の赤い光', trick: '花火を綺麗な赤色にする！', cat: '身近なモノ' },
+            { num: 39, symbol: 'Y', name: 'イットリウム', reading: 'いっとりうむ', item: '液晶テレビの赤色表示', trick: '画面を鮮やかに発色させる！', cat: '金属・ハイテク' },
+            { num: 40, symbol: 'Zr', name: 'ジルコニウム', reading: 'じるこにうむ', item: '人工ダイヤモンド・セラミック刃物', trick: 'ダイヤそっくりの宝石になる！', cat: '身近なモノ' },
+            { num: 41, symbol: 'Nb', name: 'ニオブ', reading: 'におぶ', item: 'リニアモーターカー（超伝導）', trick: '超強力な磁石を作る！', cat: '金属・ハイテク' },
+            { num: 42, symbol: 'Mo', name: 'モリブデン', reading: 'もりぶでん', item: '超硬工具・栄養素', trick: 'めちゃくちゃ硬い金属を作る！', cat: '金属・ハイテク' },
+            { num: 43, symbol: 'Tc', name: 'テクネチウム', reading: 'てくねちうむ', item: '病院のガン検査診断', trick: '人工的に作られた最初の元素！', cat: 'カラダ・医療' },
+            { num: 44, symbol: 'Ru', name: 'ルテニウム', reading: 'るてにうむ', item: 'ハードディスクの記録面', trick: 'データ記憶の容量を増やす！', cat: '金属・ハイテク' },
+            { num: 45, symbol: 'Rh', name: 'ロジウム', reading: 'ろじうむ', item: '車の排ガス浄化触媒', trick: '排気ガスをきれいにする金属！', cat: '金属・ハイテク' },
+            { num: 46, symbol: 'Pd', name: 'パラジウム', reading: 'ぱらじうむ', item: '歯の詰め物（銀歯）', trick: '歯医者の銀歯に使われている！', cat: 'カラダ・医療' },
+            { num: 47, symbol: 'Ag', name: '銀', reading: 'ぎん', item: '100円玉・アクセサリー', trick: '全金属の中で最も電気を通す！', cat: '金属・ハイテク' },
+            { num: 48, symbol: 'Cd', name: 'カドミウム', reading: 'かどみうむ', item: '黄色い絵の具・二次電池', trick: '鮮やかな黄色の顔料に使われた！', cat: '身近なモノ' },
+            { num: 49, symbol: 'In', name: 'インジウム', reading: 'いんじうむ', item: 'スマホのタッチパネル', trick: '透明なのに電気を通すスゴイ金属！', cat: '金属・ハイテク' },
+            { num: 50, symbol: 'Sn', name: 'スズ', reading: 'すず', item: '缶詰の内部メッキ・ハンダ', trick: '金属同士をくっつけるハンダの主成分！', cat: '身近なモノ' },
+            { num: 51, symbol: 'Sb', name: 'アンチモン', reading: 'あんちもん', item: 'バッテリー・マッチ', trick: '硬さを増すための合金材料！', cat: '身近なモノ' },
+            { num: 52, symbol: 'Te', name: 'テルル', reading: 'てるる', item: '書き換え可能DVD（DVD-RW）', trick: '光で状態が変わる性質を持つ！', cat: '金属・ハイテク' },
+            { num: 53, symbol: 'I', name: 'ヨウ素', reading: 'ようそ', item: 'うがい薬（イソジン）・レントゲン造影剤', trick: '消毒薬の茶色い成分！', cat: 'カラダ・医療' },
+            { num: 54, symbol: 'Xe', name: 'キセノン', reading: 'きせのん', item: '車のヘッドライト・麻酔', trick: '強烈な光を放つ高級ガス！', cat: '空気・ガス' },
+            { num: 55, symbol: 'Cs', name: 'セシウム', reading: 'せしうむ', item: '100万年に1秒もズレない原子時計', trick: '時間の単位「1秒」の基準！', cat: '金属・ハイテク' },
+            { num: 56, symbol: 'Ba', name: 'バリウム', reading: 'ばりうむ', item: '胃のレントゲン検査（健康診断）', trick: '飲むと胃の形がX線に映る！', cat: 'カラダ・医療' },
+            { num: 57, symbol: 'La', name: 'ランタン', reading: 'らんたん', item: 'カメラの高級レンズ', trick: '光を綺麗に屈折させるレンズ素材！', cat: '身近なモノ' },
+            { num: 58, symbol: 'Ce', name: 'セリウム', reading: 'せりうむ', item: 'ガラスの研磨剤・ライターの発火石', trick: 'ガラスを鏡のようにピカピカに磨く！', cat: '身近なモノ' },
+            { num: 59, symbol: 'Pr', name: 'プラセオジム', reading: 'ぷらせおじむ', item: '黄色いガラス・強力磁石', trick: 'ゴーグルの遮光ガラスに使われる！', cat: '身近なモノ' },
+            { num: 60, symbol: 'Nd', name: 'ネオジム', reading: 'ねおじむ', item: '最強の磁石（ネオジム磁石）', trick: '世界で一番強い磁石を作る！', cat: '金属・ハイテク' },
+            { num: 61, symbol: 'Pm', name: 'プロメチウム', reading: 'ぷろめちうむ', item: '宇宙船の原子力電池', trick: '天然には存在しない珍しい元素！', cat: '金属・ハイテク' },
+            { num: 62, symbol: 'Sm', name: 'サマリウム', reading: 'さまりうむ', item: '高温に強い強力磁石', trick: '熱くなっても磁力が落ちない！', cat: '金属・ハイテク' },
+            { num: 63, symbol: 'Eu', name: 'ユウロピウム', reading: 'ゆうろぴうむ', item: 'ユーロ紙幣の偽造防止インク', trick: '紫外線線を当てると光る！', cat: '身近なモノ' },
+            { num: 64, symbol: 'Gd', name: 'ガドリニウム', reading: 'がどりにうむ', item: '病院のMRI検査の造影剤', trick: '体内の画像をクッキリ映す！', cat: 'カラダ・医療' },
+            { num: 65, symbol: 'Tb', name: 'テルビウム', reading: 'てるびうむ', item: '蛍光灯の緑色発光体', trick: '綺麗な緑色に光る蛍光体！', cat: '身近なモノ' },
+            { num: 66, symbol: 'Dy', name: 'ジスプロシウム', reading: 'じすぷろしうむ', item: 'ハイブリッドカーのモーター', trick: 'モーターを耐熱化させる！', cat: '金属・ハイテク' },
+            { num: 67, symbol: 'Ho', name: 'ホルミウム', reading: 'ほるみうむ', item: '医療用レーザーメス', trick: 'ピンポイントで切開するレーザー！', cat: 'カラダ・医療' },
+            { num: 68, symbol: 'Er', name: 'エルビウム', reading: 'えるびうむ', item: '光ファイバーの光増幅器', trick: '弱くなった光信号を強める！', cat: '金属・ハイテク' },
+            { num: 69, symbol: 'Tm', name: 'ツリウム', reading: 'つりうむ', item: 'ポータブルX線装置', trick: '持ち運びできるレントゲンに使われる！', cat: 'カラダ・医療' },
+            { num: 70, symbol: 'Yb', name: 'イッテルビウム', reading: 'いってるびうむ', item: '超精密な次世代原子時計', trick: '光格子時計という未来の時計へ！', cat: '金属・ハイテク' },
+            { num: 71, symbol: 'Lu', name: 'ルテチウム', reading: 'るてちうむ', item: 'PET検査（がんの早期発見）', trick: 'がん細胞を発見する医療機器に使う！', cat: 'カラダ・医療' },
+            { num: 72, symbol: 'Hf', name: 'ハフニウム', reading: 'はふにうむ', item: '最新CPU（パソコンの頭脳）', trick: 'CPUの漏れ電力を防ぐ絶縁体！', cat: '金属・ハイテク' },
+            { num: 73, symbol: 'Ta', name: 'タンタル', reading: 'たんたる', item: 'スマホの超小型コンデンサ', trick: 'スマホを小型化できた最大の立役者！', cat: '金属・ハイテク' },
+            { num: 74, symbol: 'W', name: 'タングステン', reading: 'たんぐすてん', item: '白熱電球の線・金属ドリル', trick: '全金属の中で最も高融点（3422℃）！', cat: '金属・ハイテク' },
+            { num: 75, symbol: 'Re', name: 'レニウム', reading: 'れにうむ', item: 'ジェットエンジンのタービン刃', trick: '超高温に耐える最強の耐熱金属！', cat: '金属・ハイテク' },
+            { num: 76, symbol: 'Os', name: 'オスミウム', reading: 'おすみうむ', item: '万年筆のペン先', trick: '全物質の中で最も密度が高い（重い）！', cat: '身近なモノ' },
+            { num: 77, symbol: 'Ir', name: 'イリジウム', reading: 'いりじうむ', item: '高級スパークプラグ・キログラム原器', trick: '隕石に多く含まれる超硬質金属！', cat: '金属・ハイテク' },
+            { num: 78, symbol: 'Pt', name: 'プラチナ（白金）', reading: 'ぷらちな', item: '指輪・車の排ガス浄化触媒', trick: '変色しない美しさと高い触媒能力！', cat: '金属・ハイテク' },
+            { num: 79, symbol: 'Au', name: '金', reading: 'きん', item: '金メダル・スマホ内部の配線', trick: '絶対に錆びず、輝き続ける価値ある金属！', cat: '金属・ハイテク' }
+        ];
+
+        let currentCategory = 'all';
+
+        function renderCards() {
+            const grid = document.getElementById('elementGrid');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
+            grid.innerHTML = '';
+
+            const filtered = elements.filter(el => {
+                const matchesCategory = (currentCategory === 'all' || el.cat === currentCategory);
+                const matchesSearch = el.name.toLowerCase().includes(searchVal) || 
+                                      el.symbol.toLowerCase().includes(searchVal) || 
+                                      el.reading.toLowerCase().includes(searchVal) ||
+                                      el.item.toLowerCase().includes(searchVal);
+                return matchesCategory && matchesSearch;
+            });
+
+            if(filtered.length === 0) {
+                grid.innerHTML = '<p style="font-weight:800; color:#fff; text-align:center; grid-column: 1/-1;">該当する元素が見つかりませんでした 🔍</p>';
+                return;
+            }
+
+            filtered.forEach(el => {
+                const card = document.createElement('div');
+                card.className = 'element-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="atomic-num">No. ${el.num}</span>
+                        <span class="symbol">${el.symbol}</span>
+                    </div>
+                    <div class="name-jp">${el.name}</div>
+                    <div class="reading">${el.reading}</div>
+                    <div class="item-box">
+                        <div class="item-title">🏠 身近にある例・使い道</div>
+                        <div class="item-text">${el.item}</div>
+                    </div>
+                    <div class="trick-box">
+                        <div class="trick-title">💡 特徴</div>
+                        <div class="trick-text">${el.trick}</div>
+                    </div>
+                    <span class="tag">${el.cat}</span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('goroTableBody');
+            tbody.innerHTML = '';
+            elements.forEach(el => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${el.num}</td>
+                    <td style="font-size:1.3rem; font-weight:900; color:#1e3c72; background:#fffde7;">${el.symbol}</td>
+                    <td style="font-weight:900;">${el.name}</td>
+                    <td>${el.reading}</td>
+                    <td>${el.item}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterCategory(evt, cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            evt.target.classList.add('active');
+            renderCards();
+        }
+
+        // 初期化処理
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('searchInput').addEventListener('input', renderCards);
+            renderCards();
+            renderTable();
+        });
+    </script>
+</body>
+</html>
